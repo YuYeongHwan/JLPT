@@ -1,7 +1,8 @@
+import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useState } from 'react'
 import { Rating, type Grade, type IPreview } from 'ts-fsrs'
 import type { Screen } from '../App'
-import { blankTarget, db, type StoredCard, type Word } from '../db'
+import { blankTarget, db, toggleFlag, type StoredCard, type Word } from '../db'
 import { buildSession, formatInterval, rate, schedule } from '../srs'
 
 const GRADES: { grade: Grade; label: string; cls: string }[] = [
@@ -16,6 +17,7 @@ export default function Review({ go }: { go: (s: Screen) => void }) {
   const [words, setWords] = useState(new Map<string, Word>())
   const [preview, setPreview] = useState<IPreview | null>(null) // 뒤집는 순간의 repeat() 결과
   const [done, setDone] = useState(0)
+  const flagged = useLiveQuery(() => (queue?.[0] ? db.flags.get(queue[0].wordId) : undefined), [queue?.[0]?.wordId])
 
   useEffect(() => {
     buildSession().then(async (cards) => {
@@ -68,6 +70,17 @@ export default function Review({ go }: { go: (s: Screen) => void }) {
         {!flipped && <span className="text-sm text-slate-500" lang="ko">탭해서 정답 보기</span>}
       </button>
 
+      <div className="mb-2 flex h-9 justify-end">
+        {flipped && (
+          <button
+            onClick={() => toggleFlag(word.id)}
+            aria-pressed={!!flagged}
+            className={`rounded-full px-4 text-sm ${flagged ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-400'}`}
+          >
+            {flagged ? '⚑ 이상함 표시됨' : '⚐ 이상함'}
+          </button>
+        )}
+      </div>
       <div className="grid h-20 grid-cols-4 gap-2">
         {flipped ? (
           GRADES.map((g) => (

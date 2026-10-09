@@ -35,16 +35,23 @@ export interface Meta {
   key: string
   value: unknown
 }
+// 복습 중 '이상함' 표시한 단어 (데이터 일괄 수정용)
+export interface Flag {
+  wordId: string
+  at: Date
+}
 
-export const SCHEMA_VERSION = 2 // 올리면 기존 로컬 데이터 초기화 + 이전 백업 거부
+// Dexie 버전 = 백업 schemaVersion. 올릴 때 importBackup에 이전 버전 마이그레이션 추가
+export const SCHEMA_VERSION = 3
 
 export const db = new Dexie('jlpt-n1') as Dexie & {
   words: EntityTable<Word, 'id'>
   cards: EntityTable<StoredCard, 'id'>
   logs: EntityTable<StoredLog, 'id'>
   meta: EntityTable<Meta, 'key'>
+  flags: EntityTable<Flag, 'wordId'>
 }
-db.version(SCHEMA_VERSION)
+db.version(2)
   .stores({
     words: 'id',
     cards: 'id, wordId, due, state',
@@ -53,8 +60,19 @@ db.version(SCHEMA_VERSION)
   })
   // v1은 순번 id라 호환 불가 → 전부 비움
   .upgrade((tx) => Promise.all(['words', 'cards', 'logs', 'meta'].map((t) => tx.table(t).clear())))
+db.version(3).stores({ flags: 'wordId' })
 
 export const wordId = (w: VocabEntry) => `${w.word}|${w.reading}`
+
+export const toggleFlag = async (id: string) =>
+  (await db.flags.get(id)) ? db.flags.delete(id) : db.flags.put({ wordId: id, at: new Date() })
+
+// 플래그된 단어를 n1_vocab.json 형식 그대로 (id/order 제외)
+export async function flaggedEntries(): Promise<VocabEntry[]> {
+  const flags = await db.flags.orderBy('wordId').toArray()
+  const words = await db.words.bulkGet(flags.map((f) => f.wordId))
+  return words.filter((w) => w !== undefined).map(({ id: _id, order: _order, ...entry }) => entry)
+}
 
 // 매 실행마다 JSON → Dexie 동기화. 전체 데이터로 바꿀 땐 public/data/n1_vocab.json 만 교체.
 // 단어는 덮어쓰고, 카드는 없는 것만 추가, JSON에서 빠진 카드는 suspended (진행도 보존).
@@ -105,19 +123,21 @@ export async function exportBackup() {
     cards: await db.cards.toArray(),
     logs: await db.logs.toArray(),
     meta: await db.meta.toArray(),
+    flags: await db.flags.toArray(),
   })
 }
 
 const ISO = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/
 export async function importBackup(text: string) {
   const data = JSON.parse(text, (_, v) => (typeof v === 'string' && ISO.test(v) ? new Date(v) : v))
-  if (data?.schemaVersion !== SCHEMA_VERSION) throw new Error('호환되지 않는 백업입니다')
-  if (!Array.isArray(data.cards) || !Array.isArray(data.logs) || !Array.isArray(data.meta))
-    throw new Error('올바른 백업 파일이 아닙니다')
-  await db.transaction('rw', db.cards, db.logs, db.meta, async () => {
-    await Promise.all([db.cards.clear(), db.logs.clear(), db.meta.clear()])
+  if (data?.schemaVersion === 2) data.flags = [] // v2 → v3: flags 테이블만 추가됨
+  else if (data?.schemaVersion !== SCHEMA_VERSION) throw new Error('호환되지 않는 백업입니다')
+  if (![data.cards, data.logs, data.meta, data.flags].every(Array.isArray)) throw new Error('올바른 백업 파일이 아닙니다')
+  await db.transaction('rw', [db.cards, db.logs, db.meta, db.flags], async () => {
+    await Promise.all([db.cards.clear(), db.logs.clear(), db.meta.clear(), db.flags.clear()])
     await db.cards.bulkPut(data.cards)
     await db.logs.bulkPut(data.logs)
     await db.meta.bulkPut(data.meta)
+    await db.flags.bulkPut(data.flags)
   })
 }

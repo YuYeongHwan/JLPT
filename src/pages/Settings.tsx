@@ -1,16 +1,19 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useState } from 'react'
 import type { Screen } from '../App'
-import { exportBackup, getSetting, importBackup, setSetting } from '../db'
+import { db, exportBackup, flaggedEntries, getSetting, importBackup, setSetting } from '../db'
 import { DEFAULT_NEW_PER_DAY } from '../srs'
 
 export default function Settings({ go }: { go: (s: Screen) => void }) {
   const [newPerDay, setNewPerDay] = useState(DEFAULT_NEW_PER_DAY)
   const [msg, setMsg] = useState('')
   const lastBackup = useLiveQuery(() => getSetting<Date | null>('lastBackup', null))
+  const flagged = useLiveQuery(flaggedEntries)
+  const [persisted, setPersisted] = useState<boolean | null>(null)
 
   useEffect(() => {
     getSetting('newPerDay', DEFAULT_NEW_PER_DAY).then(setNewPerDay)
+    navigator.storage?.persisted?.().then(setPersisted)
   }, [])
 
   function changeNew(v: number) {
@@ -19,14 +22,9 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
     setSetting('newPerDay', n)
   }
 
-  async function doExport() {
-    const blob = new Blob([await exportBackup()], { type: 'application/json' })
-    const a = document.createElement('a')
-    a.href = URL.createObjectURL(blob)
-    a.download = `jlpt-n1-backup-${new Date().toISOString().slice(0, 10)}.json`
-    a.click()
-    URL.revokeObjectURL(a.href)
-  }
+  const today = () => new Date().toISOString().slice(0, 10)
+  const doExport = async () => download(`jlpt-n1-backup-${today()}.json`, await exportBackup())
+  const exportFlagged = () => download(`jlpt-n1-flagged-${today()}.json`, JSON.stringify(flagged, null, 1))
 
   async function doImport(file?: File) {
     if (!file || !confirm('현재 학습 기록을 백업 파일로 덮어씁니다. 계속할까요?')) return
@@ -42,7 +40,22 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
   return (
     <>
       <h1 className="text-xl font-bold">설정</h1>
-      <div className="flex flex-1 flex-col justify-end gap-4">
+      <div className="-mx-5 flex flex-1 flex-col gap-4 overflow-y-auto px-5 pt-4 *:shrink-0">
+        <details className="rounded-2xl bg-slate-800 px-5 py-4">
+          <summary className="cursor-pointer">'이상함' 표시한 단어 {flagged?.length ?? 0}개</summary>
+          <ul className="mt-3 max-h-48 space-y-1 overflow-y-auto text-sm text-slate-300" lang="ja">
+            {flagged?.map((w) => (
+              <li key={`${w.word}|${w.reading}`} className="flex justify-between gap-2">
+                <span>{w.word}（{w.reading}）</span>
+                <button onClick={() => db.flags.delete(`${w.word}|${w.reading}`)} className="text-slate-500" aria-label="표시 해제">✕</button>
+              </li>
+            ))}
+          </ul>
+          <button onClick={exportFlagged} disabled={!flagged?.length} className="mt-3 h-11 w-full rounded-xl bg-slate-700 text-sm disabled:opacity-40">
+            표시한 단어 JSON 내보내기
+          </button>
+        </details>
+        <div className="flex-1" />
         <div className="flex items-center justify-between rounded-2xl bg-slate-800 px-5 py-4">
           <span id="new-per-day">하루 신규 카드 수</span>
           <div className="flex items-center gap-2">
@@ -61,6 +74,8 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
         <p className="px-1 text-sm text-slate-500">카드는 단어당 2장(읽기·문맥)이에요.</p>
         <p className="px-1 text-sm text-slate-400">
           마지막 백업: {lastBackup ? lastBackup.toLocaleString('ko-KR') : '없음'}
+          <br />
+          저장소 영구 보존: {persisted === null ? '확인 불가' : persisted ? '예' : '아니오 (브라우저가 지울 수 있음)'}
         </p>
         {msg && <p className="px-1 text-sm text-sky-400">{msg}</p>}
         <button onClick={doExport} className="h-14 rounded-2xl bg-slate-800 active:bg-slate-700">백업 내보내기 (JSON)</button>
@@ -68,8 +83,16 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
           백업 가져오기
           <input type="file" accept="application/json,.json" hidden onChange={(e) => doImport(e.target.files?.[0])} />
         </label>
-        <button onClick={() => go('home')} className="h-16 rounded-2xl bg-sky-500 text-lg font-bold text-white">완료</button>
       </div>
+      <button onClick={() => go('home')} className="mt-4 h-16 shrink-0 rounded-2xl bg-sky-500 text-lg font-bold text-white">완료</button>
     </>
   )
+}
+
+function download(name: string, text: string) {
+  const a = document.createElement('a')
+  a.href = URL.createObjectURL(new Blob([text], { type: 'application/json' }))
+  a.download = name
+  a.click()
+  URL.revokeObjectURL(a.href)
 }

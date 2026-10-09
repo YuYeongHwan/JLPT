@@ -1,0 +1,902 @@
+[
+ {
+  "word": "丸々",
+  "reading": "まるまる",
+  "meaning_ko": "통째로, 꼬박, 토실토실",
+  "example_ja": "このレポートを書くのに、丸々一週間もかかってしまった。",
+  "example_target": "丸々",
+  "example_ko": "이 리포트를 쓰는 데 꼬박 일주일이나 걸려 버렸다.",
+  "pos": "부사"
+ },
+ {
+  "word": "丸める",
+  "reading": "まるめる",
+  "meaning_ko": "둥글게 하다, 뭉치다",
+  "example_ja": "彼は書き損じた紙を丸めて、ごみ箱に投げ入れた。",
+  "example_target": "丸めて",
+  "example_ko": "그는 잘못 쓴 종이를 뭉쳐서 쓰레기통에 던져 넣었다.",
+  "pos": "동사"
+ },
+ {
+  "word": "満月",
+  "reading": "まんげつ",
+  "meaning_ko": "보름달",
+  "example_ja": "今夜は満月で、明かりがなくても道がよく見える。",
+  "example_target": "満月",
+  "example_ko": "오늘 밤은 보름달이라 불빛이 없어도 길이 잘 보인다.",
+  "pos": "명사"
+ },
+ {
+  "word": "満場",
+  "reading": "まんじょう",
+  "meaning_ko": "만장, 회장 전체",
+  "example_ja": "新しい規約の提案は、総会で満場一致で可決された。",
+  "example_target": "満場",
+  "example_ko": "새 규약 제안은 총회에서 만장일치로 가결되었다.",
+  "pos": "명사"
+ },
+ {
+  "word": "真ん前",
+  "reading": "まんまえ",
+  "meaning_ko": "바로 앞",
+  "example_ja": "私の家は、駅の真ん前にあるので通勤に便利だ。",
+  "example_target": "真ん前",
+  "example_ko": "우리 집은 역 바로 앞에 있어서 출퇴근에 편리하다.",
+  "pos": "명사"
+ },
+ {
+  "word": "真ん丸い",
+  "reading": "まんまるい",
+  "meaning_ko": "아주 동그랗다",
+  "example_ja": "夜空には、真ん丸い月が明るく輝いていた。",
+  "example_target": "真ん丸い",
+  "example_ko": "밤하늘에는 아주 동그란 달이 밝게 빛나고 있었다.",
+  "pos": "い형용사"
+ },
+ {
+  "word": "真ん円い",
+  "reading": "まんまるい",
+  "meaning_ko": "아주 둥글다",
+  "example_ja": "子どもは真ん円い目をして、手品に見入っていた。",
+  "example_target": "真ん円い",
+  "example_ko": "아이는 동그란 눈을 하고 마술에 넋을 잃고 보고 있었다.",
+  "pos": "い형용사"
+ },
+ {
+  "word": "味",
+  "reading": "み",
+  "meaning_ko": "~미(맛, 느낌)",
+  "example_ja": "彼の言葉には、どこか人間味のある温かさが感じられる。",
+  "example_target": "味",
+  "example_ko": "그의 말에는 어딘가 인간미 있는 따뜻함이 느껴진다.",
+  "pos": "기타"
+ },
+ {
+  "word": "見合い",
+  "reading": "みあい",
+  "meaning_ko": "맞선",
+  "example_ja": "両親の勧めで見合いをして、半年後に結婚した。",
+  "example_target": "見合い",
+  "example_ko": "부모님의 권유로 맞선을 보고 반년 후에 결혼했다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見合わせる",
+  "reading": "みあわせる",
+  "meaning_ko": "마주 보다, 보류하다",
+  "example_ja": "強風のため、電車は運転を見合わせている。",
+  "example_target": "見合わせて",
+  "example_ko": "강풍 때문에 전철은 운행을 보류하고 있다.",
+  "pos": "동사"
+ },
+ {
+  "word": "見落とす",
+  "reading": "みおとす",
+  "meaning_ko": "못 보고 넘기다",
+  "example_ja": "大事な連絡事項を見落として、会議に遅れてしまった。",
+  "example_target": "見落として",
+  "example_ko": "중요한 연락 사항을 못 보고 넘겨서 회의에 늦고 말았다.",
+  "pos": "동사"
+ },
+ {
+  "word": "未開",
+  "reading": "みかい",
+  "meaning_ko": "미개, 미개척",
+  "example_ja": "このジャングルの奥には、まだ未開の土地が広がっている。",
+  "example_target": "未開",
+  "example_ko": "이 정글 깊은 곳에는 아직 미개척 땅이 펼쳐져 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "味覚",
+  "reading": "みかく",
+  "meaning_ko": "미각",
+  "example_ja": "風邪をひいて、味覚がほとんどなくなってしまった。",
+  "example_target": "味覚",
+  "example_ko": "감기에 걸려서 미각이 거의 없어져 버렸다.",
+  "pos": "명사"
+ },
+ {
+  "word": "幹",
+  "reading": "みき",
+  "meaning_ko": "줄기",
+  "example_ja": "この神社の杉の木は、幹の太さが三メートルもある。",
+  "example_target": "幹",
+  "example_ko": "이 신사의 삼나무는 줄기 굵기가 3미터나 된다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見苦しい",
+  "reading": "みぐるしい",
+  "meaning_ko": "보기 흉하다, 꼴사납다",
+  "example_ja": "負けた後で言い訳をするのは、見苦しいことだ。",
+  "example_target": "見苦しい",
+  "example_ko": "진 뒤에 변명을 하는 것은 꼴사나운 일이다.",
+  "pos": "い형용사"
+ },
+ {
+  "word": "見込み",
+  "reading": "みこみ",
+  "meaning_ko": "전망, 가망",
+  "example_ja": "新しい工場は、来年の春に完成する見込みだ。",
+  "example_target": "見込み",
+  "example_ko": "새 공장은 내년 봄에 완공될 전망이다.",
+  "pos": "명사"
+ },
+ {
+  "word": "未婚",
+  "reading": "みこん",
+  "meaning_ko": "미혼",
+  "example_ja": "近年、未婚の若者の割合が増え続けている。",
+  "example_target": "未婚",
+  "example_ko": "최근 미혼 젊은이의 비율이 계속 늘고 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "未熟",
+  "reading": "みじゅく",
+  "meaning_ko": "미숙함",
+  "example_ja": "私はまだ未熟者ですが、精一杯頑張ります。",
+  "example_target": "未熟",
+  "example_ko": "저는 아직 미숙하지만 최선을 다하겠습니다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "微塵",
+  "reading": "みじん",
+  "meaning_ko": "미진, 티끌",
+  "example_ja": "彼には反省する気持ちなど、微塵も感じられなかった。",
+  "example_target": "微塵",
+  "example_ko": "그에게서는 반성하는 마음 따위 티끌만큼도 느껴지지 않았다.",
+  "pos": "명사"
+ },
+ {
+  "word": "水気",
+  "reading": "みずけ",
+  "meaning_ko": "물기, 수분",
+  "example_ja": "野菜を洗ったら、よく水気を切ってから炒めてください。",
+  "example_target": "水気",
+  "example_ko": "채소를 씻었으면 물기를 잘 빼고 나서 볶아 주세요.",
+  "pos": "명사"
+ },
+ {
+  "word": "ミスプリント",
+  "reading": "ミスプリント",
+  "meaning_ko": "오식, 인쇄 실수",
+  "example_ja": "配布した資料に、ミスプリントがいくつか見つかった。",
+  "example_target": "ミスプリント",
+  "example_ko": "배포한 자료에서 인쇄 실수가 몇 군데 발견되었다.",
+  "pos": "명사"
+ },
+ {
+  "word": "みすぼらしい",
+  "reading": "みすぼらしい",
+  "meaning_ko": "초라하다",
+  "example_ja": "彼はみすぼらしい服を着ていたが、実は大金持ちだった。",
+  "example_target": "みすぼらしい",
+  "example_ko": "그는 초라한 옷을 입고 있었지만 사실은 큰 부자였다.",
+  "pos": "い형용사"
+ },
+ {
+  "word": "ミセス",
+  "reading": "ミセス",
+  "meaning_ko": "미세스, 기혼 여성",
+  "example_ja": "この雑誌は、三十代以上のミセス向けに作られている。",
+  "example_target": "ミセス",
+  "example_ko": "이 잡지는 30대 이상의 기혼 여성을 위해 만들어졌다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見せびらかす",
+  "reading": "みせびらかす",
+  "meaning_ko": "자랑해 보이다",
+  "example_ja": "彼は新しく買った時計を、友人たちに見せびらかしていた。",
+  "example_target": "見せびらかして",
+  "example_ko": "그는 새로 산 시계를 친구들에게 자랑하고 있었다.",
+  "pos": "동사"
+ },
+ {
+  "word": "見せ物",
+  "reading": "みせもの",
+  "meaning_ko": "구경거리",
+  "example_ja": "事故の現場を、見せ物のように撮影する人がいて驚いた。",
+  "example_target": "見せ物",
+  "example_ko": "사고 현장을 구경거리처럼 촬영하는 사람이 있어서 놀랐다.",
+  "pos": "명사"
+ },
+ {
+  "word": "溝",
+  "reading": "みぞ",
+  "meaning_ko": "도랑, 홈, 틈",
+  "example_ja": "一度の喧嘩で、二人の間に深い溝ができてしまった。",
+  "example_target": "溝",
+  "example_ko": "한 번의 싸움으로 두 사람 사이에 깊은 골이 생겨 버렸다.",
+  "pos": "명사"
+ },
+ {
+  "word": "満たす",
+  "reading": "みたす",
+  "meaning_ko": "채우다, 충족시키다",
+  "example_ja": "応募するには、いくつかの条件を満たす必要がある。",
+  "example_target": "満たす",
+  "example_ko": "응모하려면 몇 가지 조건을 충족시킬 필요가 있다.",
+  "pos": "동사"
+ },
+ {
+  "word": "乱す",
+  "reading": "みだす",
+  "meaning_ko": "어지럽히다",
+  "example_ja": "一人の勝手な行動が、チーム全体の和を乱した。",
+  "example_target": "乱した",
+  "example_ko": "한 사람의 제멋대로인 행동이 팀 전체의 화합을 깨뜨렸다.",
+  "pos": "동사"
+ },
+ {
+  "word": "乱れる",
+  "reading": "みだれる",
+  "meaning_ko": "흐트러지다",
+  "example_ja": "強い風が吹いて、きれいに整えた髪が乱れてしまった。",
+  "example_target": "乱れて",
+  "example_ko": "강한 바람이 불어 깔끔하게 정돈한 머리가 흐트러져 버렸다.",
+  "pos": "동사"
+ },
+ {
+  "word": "未知",
+  "reading": "みち",
+  "meaning_ko": "미지",
+  "example_ja": "宇宙には、まだ未知の世界が無限に広がっている。",
+  "example_target": "未知",
+  "example_ko": "우주에는 아직 미지의 세계가 무한히 펼쳐져 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "身近",
+  "reading": "みぢか",
+  "meaning_ko": "가까움, 친근함",
+  "example_ja": "環境問題は、私たちの身近な生活にも関わっている。",
+  "example_target": "身近",
+  "example_ko": "환경 문제는 우리의 가까운 생활과도 관계되어 있다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "導く",
+  "reading": "みちびく",
+  "meaning_ko": "이끌다, 인도하다",
+  "example_ja": "新しい監督が、チームを初めての優勝に導いた。",
+  "example_target": "導いた",
+  "example_ko": "새 감독이 팀을 첫 우승으로 이끌었다.",
+  "pos": "동사"
+ },
+ {
+  "word": "密集",
+  "reading": "みっしゅう",
+  "meaning_ko": "밀집",
+  "example_ja": "この地域は、古い木造の住宅が密集している。",
+  "example_target": "密集",
+  "example_ko": "이 지역은 낡은 목조 주택이 밀집해 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "密接",
+  "reading": "みっせつ",
+  "meaning_ko": "밀접함",
+  "example_ja": "毎日の食生活と健康には、密接な関係がある。",
+  "example_target": "密接",
+  "example_ko": "매일의 식생활과 건강에는 밀접한 관계가 있다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "密度",
+  "reading": "みつど",
+  "meaning_ko": "밀도",
+  "example_ja": "東京は、世界でも人口の密度が高い都市の一つだ。",
+  "example_target": "密度",
+  "example_ko": "도쿄는 세계에서도 인구 밀도가 높은 도시 중 하나다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見積もり",
+  "reading": "みつもり",
+  "meaning_ko": "견적",
+  "example_ja": "リフォームを頼む前に、三社から見積もりを取った。",
+  "example_target": "見積もり",
+  "example_ko": "리모델링을 맡기기 전에 세 회사에서 견적을 받았다.",
+  "pos": "명사"
+ },
+ {
+  "word": "未定",
+  "reading": "みてい",
+  "meaning_ko": "미정",
+  "example_ja": "次回の会議の日程は、まだ未定となっている。",
+  "example_target": "未定",
+  "example_ko": "다음 회의 일정은 아직 미정으로 되어 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見通し",
+  "reading": "みとおし",
+  "meaning_ko": "전망, 예측",
+  "example_ja": "景気が本格的に回復する見通しは、まだ立っていない。",
+  "example_target": "見通し",
+  "example_ko": "경기가 본격적으로 회복될 전망은 아직 서지 않고 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見なす",
+  "reading": "みなす",
+  "meaning_ko": "간주하다",
+  "example_ja": "三回連続で欠席した場合は、退会したものと見なします。",
+  "example_target": "見なします",
+  "example_ko": "3회 연속 결석한 경우에는 탈퇴한 것으로 간주합니다.",
+  "pos": "동사"
+ },
+ {
+  "word": "源",
+  "reading": "みなもと",
+  "meaning_ko": "근원, 원천",
+  "example_ja": "この川の源は、遠く離れた山奥の湧き水だ。",
+  "example_target": "源",
+  "example_ko": "이 강의 근원은 멀리 떨어진 깊은 산속의 샘물이다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見習う",
+  "reading": "みならう",
+  "meaning_ko": "본받다, 견습하다",
+  "example_ja": "彼の誠実な仕事ぶりを、私たちも見習うべきだ。",
+  "example_target": "見習う",
+  "example_ko": "그의 성실한 일솜씨를 우리도 본받아야 한다.",
+  "pos": "동사"
+ },
+ {
+  "word": "身なり",
+  "reading": "みなり",
+  "meaning_ko": "옷차림, 몸차림",
+  "example_ja": "面接では、清潔な身なりを心がけることが大切だ。",
+  "example_target": "身なり",
+  "example_ko": "면접에서는 청결한 옷차림에 신경 쓰는 것이 중요하다.",
+  "pos": "명사"
+ },
+ {
+  "word": "峰",
+  "reading": "みね",
+  "meaning_ko": "봉우리",
+  "example_ja": "朝日に照らされて、雪の積もった峰が輝いていた。",
+  "example_target": "峰",
+  "example_ko": "아침 해에 비쳐 눈 쌓인 봉우리가 빛나고 있었다.",
+  "pos": "명사"
+ },
+ {
+  "word": "身の上",
+  "reading": "みのうえ",
+  "meaning_ko": "신상, 처지",
+  "example_ja": "彼女は、自分の不幸な身の上を涙ながらに語った。",
+  "example_target": "身の上",
+  "example_ko": "그녀는 자신의 불행한 처지를 눈물을 흘리며 이야기했다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見逃す",
+  "reading": "みのがす",
+  "meaning_ko": "놓치다, 눈감아 주다",
+  "example_ja": "楽しみにしていたドラマの最終回を、見逃してしまった。",
+  "example_target": "見逃して",
+  "example_ko": "기대하던 드라마의 마지막 회를 놓쳐 버렸다.",
+  "pos": "동사"
+ },
+ {
+  "word": "身の回り",
+  "reading": "みのまわり",
+  "meaning_ko": "신변, 일상생활",
+  "example_ja": "祖母は九十歳だが、身の回りのことは何でも自分でする。",
+  "example_target": "身の回り",
+  "example_ko": "할머니는 90세지만 신변의 일은 뭐든지 혼자서 하신다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見計らう",
+  "reading": "みはからう",
+  "meaning_ko": "가늠하다, 적당히 고르다",
+  "example_ja": "相手が落ち着いた頃を見計らって、話を切り出した。",
+  "example_target": "見計らって",
+  "example_ko": "상대가 진정되었을 무렵을 가늠해서 이야기를 꺼냈다.",
+  "pos": "동사"
+ },
+ {
+  "word": "見晴らし",
+  "reading": "みはらし",
+  "meaning_ko": "전망",
+  "example_ja": "このホテルの部屋は、海を一望できて見晴らしがいい。",
+  "example_target": "見晴らし",
+  "example_ko": "이 호텔 방은 바다를 한눈에 볼 수 있어서 전망이 좋다.",
+  "pos": "명사"
+ },
+ {
+  "word": "身振り",
+  "reading": "みぶり",
+  "meaning_ko": "몸짓",
+  "example_ja": "言葉が通じないので、身振り手振りで道を尋ねた。",
+  "example_target": "身振り",
+  "example_ko": "말이 통하지 않아서 몸짓 손짓으로 길을 물었다.",
+  "pos": "명사"
+ },
+ {
+  "word": "脈",
+  "reading": "みゃく",
+  "meaning_ko": "맥, 맥박",
+  "example_ja": "医者は患者の手首に指を当てて、脈を測った。",
+  "example_target": "脈",
+  "example_ko": "의사는 환자의 손목에 손가락을 대고 맥을 쟀다.",
+  "pos": "명사"
+ },
+ {
+  "word": "ミュージック",
+  "reading": "ミュージック",
+  "meaning_ko": "뮤직, 음악",
+  "example_ja": "カフェには、心地よいバックグラウンドミュージックが流れていた。",
+  "example_target": "ミュージック",
+  "example_ko": "카페에는 기분 좋은 배경 음악이 흐르고 있었다.",
+  "pos": "명사"
+ },
+ {
+  "word": "未練",
+  "reading": "みれん",
+  "meaning_ko": "미련",
+  "example_ja": "彼は別れた恋人に、まだ未練があるようだ。",
+  "example_target": "未練",
+  "example_ko": "그는 헤어진 연인에게 아직 미련이 있는 것 같다.",
+  "pos": "명사"
+ },
+ {
+  "word": "見渡す",
+  "reading": "みわたす",
+  "meaning_ko": "둘러보다, 바라보다",
+  "example_ja": "丘の上に立つと、町全体を見渡すことができた。",
+  "example_target": "見渡す",
+  "example_ko": "언덕 위에 서자 마을 전체를 둘러볼 수 있었다.",
+  "pos": "동사"
+ },
+ {
+  "word": "民宿",
+  "reading": "みんしゅく",
+  "meaning_ko": "민박",
+  "example_ja": "夏休みは、海辺の民宿に泊まって釣りを楽しんだ。",
+  "example_target": "民宿",
+  "example_ko": "여름 방학에는 바닷가 민박에 묵으며 낚시를 즐겼다.",
+  "pos": "명사"
+ },
+ {
+  "word": "民族",
+  "reading": "みんぞく",
+  "meaning_ko": "민족",
+  "example_ja": "この国には、多くの民族がそれぞれの文化を守って暮らしている。",
+  "example_target": "民族",
+  "example_ko": "이 나라에는 많은 민족이 각자의 문화를 지키며 살고 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "民俗",
+  "reading": "みんぞく",
+  "meaning_ko": "민속",
+  "example_ja": "この博物館には、昔の農村の民俗資料が展示されている。",
+  "example_target": "民俗",
+  "example_ko": "이 박물관에는 옛 농촌의 민속 자료가 전시되어 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "無意味",
+  "reading": "むいみ",
+  "meaning_ko": "무의미",
+  "example_ja": "結論の出ない会議を続けるのは、無意味だと思う。",
+  "example_target": "無意味",
+  "example_ko": "결론이 나지 않는 회의를 계속하는 것은 무의미하다고 생각한다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "ムード",
+  "reading": "ムード",
+  "meaning_ko": "무드, 분위기",
+  "example_ja": "ろうそくの明かりが、部屋にロマンチックなムードを作った。",
+  "example_target": "ムード",
+  "example_ko": "촛불이 방에 로맨틱한 분위기를 만들었다.",
+  "pos": "명사"
+ },
+ {
+  "word": "無口",
+  "reading": "むくち",
+  "meaning_ko": "과묵함",
+  "example_ja": "父は無口な人だが、家族のことをいつも気にかけている。",
+  "example_target": "無口",
+  "example_ko": "아버지는 과묵한 분이지만 가족을 늘 마음에 두고 계신다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "婿",
+  "reading": "むこ",
+  "meaning_ko": "사위",
+  "example_ja": "娘の婿は、とても礼儀正しくて真面目な青年だ。",
+  "example_target": "婿",
+  "example_ko": "딸의 사위는 아주 예의 바르고 성실한 청년이다.",
+  "pos": "명사"
+ },
+ {
+  "word": "無効",
+  "reading": "むこう",
+  "meaning_ko": "무효",
+  "example_ja": "期限を過ぎたクーポンは、無効となりますのでご注意ください。",
+  "example_target": "無効",
+  "example_ko": "기한이 지난 쿠폰은 무효가 되니 주의해 주세요.",
+  "pos": "명사"
+ },
+ {
+  "word": "無言",
+  "reading": "むごん",
+  "meaning_ko": "무언",
+  "example_ja": "彼は無言のまま、部屋を出ていってしまった。",
+  "example_target": "無言",
+  "example_ko": "그는 아무 말 없이 방을 나가 버렸다.",
+  "pos": "명사"
+ },
+ {
+  "word": "無邪気",
+  "reading": "むじゃき",
+  "meaning_ko": "천진난만함",
+  "example_ja": "子どもたちの無邪気な笑顔を見ていると、心が和む。",
+  "example_target": "無邪気",
+  "example_ko": "아이들의 천진난만한 웃는 얼굴을 보고 있으면 마음이 누그러진다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "むしる",
+  "reading": "むしる",
+  "meaning_ko": "뜯다, 잡아 뽑다",
+  "example_ja": "週末は、庭に生えた雑草をむしるのに半日かかった。",
+  "example_target": "むしる",
+  "example_ko": "주말에는 정원에 난 잡초를 뽑는 데 반나절이 걸렸다.",
+  "pos": "동사"
+ },
+ {
+  "word": "結び",
+  "reading": "むすび",
+  "meaning_ko": "맺음, 끝맺음",
+  "example_ja": "彼はスピーチの結びに、参加者への感謝の言葉を述べた。",
+  "example_target": "結び",
+  "example_ko": "그는 연설 끝맺음에 참가자들에게 감사의 말을 전했다.",
+  "pos": "명사"
+ },
+ {
+  "word": "結び付き",
+  "reading": "むすびつき",
+  "meaning_ko": "결부, 유대",
+  "example_ja": "この地域では、住民同士の結び付きが非常に強い。",
+  "example_target": "結び付き",
+  "example_ko": "이 지역에서는 주민들 간의 유대가 매우 강하다.",
+  "pos": "명사"
+ },
+ {
+  "word": "結び付く",
+  "reading": "むすびつく",
+  "meaning_ko": "결부되다, 이어지다",
+  "example_ja": "日々の努力が、ようやく今回の成果に結び付いた。",
+  "example_target": "結び付いた",
+  "example_ko": "매일의 노력이 마침내 이번 성과로 이어졌다.",
+  "pos": "동사"
+ },
+ {
+  "word": "結び付ける",
+  "reading": "むすびつける",
+  "meaning_ko": "결부시키다, 잡아매다",
+  "example_ja": "この二つの事件を結び付ける証拠は、まだ見つかっていない。",
+  "example_target": "結び付ける",
+  "example_ko": "이 두 사건을 결부시키는 증거는 아직 발견되지 않았다.",
+  "pos": "동사"
+ },
+ {
+  "word": "無線",
+  "reading": "むせん",
+  "meaning_ko": "무선",
+  "example_ja": "このカフェでは、無線のインターネットが無料で使える。",
+  "example_target": "無線",
+  "example_ko": "이 카페에서는 무선 인터넷을 무료로 쓸 수 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "無駄遣い",
+  "reading": "むだづかい",
+  "meaning_ko": "낭비",
+  "example_ja": "給料が入るとつい無駄遣いをして、月末に困ってしまう。",
+  "example_target": "無駄遣い",
+  "example_ko": "월급이 들어오면 그만 낭비를 해서 월말에 곤란해진다.",
+  "pos": "명사"
+ },
+ {
+  "word": "無断",
+  "reading": "むだん",
+  "meaning_ko": "무단",
+  "example_ja": "他人の写真を無断で使用することは、法律で禁止されている。",
+  "example_target": "無断",
+  "example_ko": "타인의 사진을 무단으로 사용하는 것은 법률로 금지되어 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "無知",
+  "reading": "むち",
+  "meaning_ko": "무지",
+  "example_ja": "自分の無知を認めることが、学ぶことの第一歩だ。",
+  "example_target": "無知",
+  "example_ko": "자신의 무지를 인정하는 것이 배움의 첫걸음이다.",
+  "pos": "명사"
+ },
+ {
+  "word": "無茶",
+  "reading": "むちゃ",
+  "meaning_ko": "터무니없음, 무모함",
+  "example_ja": "そんな無茶な計画では、きっと失敗するに違いない。",
+  "example_target": "無茶",
+  "example_ko": "그런 무모한 계획으로는 틀림없이 실패할 것이다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "無茶苦茶",
+  "reading": "むちゃくちゃ",
+  "meaning_ko": "엉망진창",
+  "example_ja": "台風が過ぎた後、庭は無茶苦茶に荒らされていた。",
+  "example_target": "無茶苦茶",
+  "example_ko": "태풍이 지나간 뒤 정원은 엉망진창으로 망가져 있었다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "空しい",
+  "reading": "むなしい",
+  "meaning_ko": "공허하다, 허무하다",
+  "example_ja": "一生懸命に努力したが、結果は空しく終わった。",
+  "example_target": "空しく",
+  "example_ko": "열심히 노력했지만 결과는 허무하게 끝났다.",
+  "pos": "い형용사"
+ },
+ {
+  "word": "無念",
+  "reading": "むねん",
+  "meaning_ko": "원통함, 분함",
+  "example_ja": "決勝戦で敗れた選手たちは、無念の涙を流した。",
+  "example_target": "無念",
+  "example_ko": "결승전에서 진 선수들은 분한 눈물을 흘렸다.",
+  "pos": "명사"
+ },
+ {
+  "word": "無能",
+  "reading": "むのう",
+  "meaning_ko": "무능",
+  "example_ja": "部下の失敗を責めるだけの上司は、無能だと言われても仕方ない。",
+  "example_target": "無能",
+  "example_ko": "부하의 실수를 탓하기만 하는 상사는 무능하다는 말을 들어도 어쩔 수 없다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "無闇に",
+  "reading": "むやみに",
+  "meaning_ko": "무턱대고",
+  "example_ja": "知らない人のメールのリンクを、無闇に開いてはいけない。",
+  "example_target": "無闇に",
+  "example_ko": "모르는 사람의 메일 링크를 무턱대고 열어서는 안 된다.",
+  "pos": "부사"
+ },
+ {
+  "word": "無用",
+  "reading": "むよう",
+  "meaning_ko": "무용, 불필요",
+  "example_ja": "ご心配は無用です、すべて準備は整っております。",
+  "example_target": "無用",
+  "example_ko": "걱정하실 필요 없습니다, 모든 준비는 갖추어져 있습니다.",
+  "pos": "명사"
+ },
+ {
+  "word": "斑",
+  "reading": "むら",
+  "meaning_ko": "얼룩, 고르지 않음",
+  "example_ja": "壁のペンキの塗り方に斑があって、見栄えが悪い。",
+  "example_target": "斑",
+  "example_ko": "벽 페인트 칠한 것이 얼룩덜룩해서 보기 좋지 않다.",
+  "pos": "명사"
+ },
+ {
+  "word": "群がる",
+  "reading": "むらがる",
+  "meaning_ko": "떼 지어 모이다",
+  "example_ja": "落とした飴に、たくさんのアリが群がっていた。",
+  "example_target": "群がって",
+  "example_ko": "떨어뜨린 사탕에 많은 개미가 떼 지어 모여 있었다.",
+  "pos": "동사"
+ },
+ {
+  "word": "無論",
+  "reading": "むろん",
+  "meaning_ko": "물론",
+  "example_ja": "無論、約束した以上は最後まで責任を持ちます。",
+  "example_target": "無論",
+  "example_ko": "물론 약속한 이상은 끝까지 책임지겠습니다.",
+  "pos": "부사"
+ },
+ {
+  "word": "名産",
+  "reading": "めいさん",
+  "meaning_ko": "명산(물), 특산",
+  "example_ja": "この地方の名産であるみかんは、甘くてとても人気がある。",
+  "example_target": "名産",
+  "example_ko": "이 지방의 특산인 귤은 달아서 매우 인기가 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "名称",
+  "reading": "めいしょう",
+  "meaning_ko": "명칭",
+  "example_ja": "新しい駅の名称は、市民の投票によって決められた。",
+  "example_target": "名称",
+  "example_ko": "새 역의 명칭은 시민 투표로 정해졌다.",
+  "pos": "명사"
+ },
+ {
+  "word": "命中",
+  "reading": "めいちゅう",
+  "meaning_ko": "명중",
+  "example_ja": "彼が放った矢は、見事に的の中心に命中した。",
+  "example_target": "命中",
+  "example_ko": "그가 쏜 화살은 멋지게 과녁 중앙에 명중했다.",
+  "pos": "명사"
+ },
+ {
+  "word": "明白",
+  "reading": "めいはく",
+  "meaning_ko": "명백함",
+  "example_ja": "これだけの証拠がそろった以上、彼の罪は明白だ。",
+  "example_target": "明白",
+  "example_ko": "이만큼 증거가 갖추어진 이상 그의 죄는 명백하다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "名簿",
+  "reading": "めいぼ",
+  "meaning_ko": "명부",
+  "example_ja": "同窓会の名簿を見て、懐かしい名前を見つけた。",
+  "example_target": "名簿",
+  "example_ko": "동창회 명부를 보고 그리운 이름을 발견했다.",
+  "pos": "명사"
+ },
+ {
+  "word": "名誉",
+  "reading": "めいよ",
+  "meaning_ko": "명예",
+  "example_ja": "彼は優れた研究が認められ、名誉ある賞を受けた。",
+  "example_target": "名誉",
+  "example_ko": "그는 뛰어난 연구를 인정받아 명예로운 상을 받았다.",
+  "pos": "명사"
+ },
+ {
+  "word": "明瞭",
+  "reading": "めいりょう",
+  "meaning_ko": "명료함",
+  "example_ja": "彼女の説明は明瞭で、誰にでも分かりやすかった。",
+  "example_target": "明瞭",
+  "example_ko": "그녀의 설명은 명료해서 누구나 알기 쉬웠다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "明朗",
+  "reading": "めいろう",
+  "meaning_ko": "명랑함",
+  "example_ja": "新しい店長は、明朗な性格でスタッフにも慕われている。",
+  "example_target": "明朗",
+  "example_ko": "새 점장은 명랑한 성격이라 직원들에게도 사랑받고 있다.",
+  "pos": "な형용사"
+ },
+ {
+  "word": "メーカー",
+  "reading": "メーカー",
+  "meaning_ko": "메이커, 제조사",
+  "example_ja": "この家電メーカーの製品は、壊れにくいと評判だ。",
+  "example_target": "メーカー",
+  "example_ko": "이 가전 제조사의 제품은 잘 고장 나지 않는다고 평판이 좋다.",
+  "pos": "명사"
+ },
+ {
+  "word": "目方",
+  "reading": "めかた",
+  "meaning_ko": "무게, 중량",
+  "example_ja": "昔ながらの市場では、魚を目方で量って売っている。",
+  "example_target": "目方",
+  "example_ko": "옛 모습 그대로의 시장에서는 생선을 무게로 달아서 팔고 있다.",
+  "pos": "명사"
+ },
+ {
+  "word": "恵み",
+  "reading": "めぐみ",
+  "meaning_ko": "은혜, 혜택",
+  "example_ja": "恵みの雨が降り、乾いていた畑がようやく潤った。",
+  "example_target": "恵み",
+  "example_ko": "단비가 내려 말라 있던 밭이 마침내 촉촉해졌다.",
+  "pos": "명사"
+ },
+ {
+  "word": "恵む",
+  "reading": "めぐむ",
+  "meaning_ko": "베풀다",
+  "example_ja": "彼は困っている人に、惜しみなくお金を恵んでいた。",
+  "example_target": "恵んで",
+  "example_ko": "그는 곤란한 사람에게 아낌없이 돈을 베풀었다.",
+  "pos": "동사"
+ },
+ {
+  "word": "目覚ましい",
+  "reading": "めざましい",
+  "meaning_ko": "눈부시다",
+  "example_ja": "この十年で、この国の経済は目覚ましい発展を遂げた。",
+  "example_target": "目覚ましい",
+  "example_ko": "최근 10년 사이 이 나라 경제는 눈부신 발전을 이루었다.",
+  "pos": "い형용사"
+ },
+ {
+  "word": "目覚める",
+  "reading": "めざめる",
+  "meaning_ko": "잠에서 깨다, 눈뜨다",
+  "example_ja": "今朝は、窓の外の鳥の鳴き声で気持ちよく目覚めた。",
+  "example_target": "目覚めた",
+  "example_ko": "오늘 아침은 창밖의 새 울음소리에 기분 좋게 잠에서 깼다.",
+  "pos": "동사"
+ },
+ {
+  "word": "召す",
+  "reading": "めす",
+  "meaning_ko": "드시다, 입으시다(존경)",
+  "example_ja": "お客様、こちらの商品はお気に召しましたでしょうか。",
+  "example_target": "召し",
+  "example_ko": "손님, 이쪽 상품은 마음에 드셨습니까?",
+  "pos": "동사"
+ },
+ {
+  "word": "雌",
+  "reading": "めす",
+  "meaning_ko": "암컷",
+  "example_ja": "この犬は雌で、とてもおとなしい性格をしている。",
+  "example_target": "雌",
+  "example_ko": "이 개는 암컷이고 아주 얌전한 성격이다.",
+  "pos": "명사"
+ },
+ {
+  "word": "目付き",
+  "reading": "めつき",
+  "meaning_ko": "눈빛, 눈매",
+  "example_ja": "彼は鋭い目付きで、相手の様子をじっと観察していた。",
+  "example_target": "目付き",
+  "example_ko": "그는 날카로운 눈빛으로 상대의 모습을 가만히 관찰하고 있었다.",
+  "pos": "명사"
+ },
+ {
+  "word": "滅亡",
+  "reading": "めつぼう",
+  "meaning_ko": "멸망",
+  "example_ja": "恐竜の滅亡の原因については、さまざまな説がある。",
+  "example_target": "滅亡",
+  "example_ko": "공룡 멸망의 원인에 대해서는 다양한 설이 있다.",
+  "pos": "명사"
+ }
+]

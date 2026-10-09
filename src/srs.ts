@@ -1,4 +1,4 @@
-import { fsrs, State, type Grade } from 'ts-fsrs'
+import { fsrs, State, type RecordLogItem } from 'ts-fsrs'
 import { db, getSetting, type StoredCard } from './db'
 
 const f = fsrs({ enable_fuzz: true })
@@ -57,10 +57,23 @@ export async function buildSession(now = new Date()): Promise<StoredCard[]> {
   return [...due, ...fresh].slice(0, SESSION_MAX)
 }
 
-// 평가 저장 + 오늘 due인 형제 카드는 다음 학습일로.
+// 4개 평가별 결과. 화면 간격 표시와 실제 저장에 같은 결과를 씀(fuzz 때문에 다시 계산하면 달라짐)
+export const schedule = (card: StoredCard, now = new Date()) => f.repeat(card, now)
+
+// 10분, 3시간, 3일, 2개월, 1.5년
+export function formatInterval(ms: number) {
+  const min = ms / 60_000
+  if (min < 60) return `${Math.max(1, Math.round(min))}분`
+  if (min < 60 * 24) return `${Math.round(min / 60)}시간`
+  const days = min / (60 * 24)
+  if (days < 30) return `${Math.round(days)}일`
+  if (days < 365) return `${Math.round(days / 30)}개월`
+  return `${+(days / 365).toFixed(1)}년`
+}
+
+// schedule()[grade] 결과 저장 + 오늘 due인 형제 카드는 다음 학습일로.
 // 반환값: 세션 안에서 다시 보여줘야 하면(학습 단계라 오늘 다시 due) 갱신된 카드
-export async function rate(card: StoredCard, grade: Grade, now = new Date()): Promise<StoredCard | null> {
-  const { card: next, log } = f.next(card, now, grade)
+export async function rate(card: StoredCard, { card: next, log }: RecordLogItem, now = new Date()): Promise<StoredCard | null> {
   const updated = { ...card, ...next }
   const tomorrow = nextDayStart(now)
   await db.transaction('rw', db.cards, db.logs, async () => {

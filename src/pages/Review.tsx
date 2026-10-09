@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { Rating, type Grade } from 'ts-fsrs'
+import { Rating, type Grade, type IPreview } from 'ts-fsrs'
 import type { Screen } from '../App'
 import { blankTarget, db, type StoredCard, type Word } from '../db'
-import { buildSession, rate } from '../srs'
+import { buildSession, formatInterval, rate, schedule } from '../srs'
 
 const GRADES: { grade: Grade; label: string; cls: string }[] = [
   { grade: Rating.Again, label: 'Again', cls: 'bg-red-500/90 active:bg-red-600' },
@@ -14,7 +14,7 @@ const GRADES: { grade: Grade; label: string; cls: string }[] = [
 export default function Review({ go }: { go: (s: Screen) => void }) {
   const [queue, setQueue] = useState<StoredCard[] | null>(null)
   const [words, setWords] = useState(new Map<string, Word>())
-  const [flipped, setFlipped] = useState(false)
+  const [preview, setPreview] = useState<IPreview | null>(null) // 뒤집는 순간의 repeat() 결과
   const [done, setDone] = useState(0)
 
   useEffect(() => {
@@ -42,11 +42,14 @@ export default function Review({ go }: { go: (s: Screen) => void }) {
       </>
     )
 
+  const flipped = preview !== null
+  const flip = () => !flipped && setPreview(schedule(card))
+
   async function answer(grade: Grade) {
-    const again = await rate(card, grade)
+    const again = await rate(card, preview![grade])
     setQueue((q) => [...q!.slice(1), ...(again ? [again] : [])])
     setDone((d) => d + 1)
-    setFlipped(false)
+    setPreview(null)
   }
 
   return (
@@ -57,7 +60,7 @@ export default function Review({ go }: { go: (s: Screen) => void }) {
       </div>
 
       <button
-        onClick={() => setFlipped(true)}
+        onClick={flip}
         className="flex flex-1 flex-col items-center justify-center gap-6 text-center"
         lang="ja"
       >
@@ -73,10 +76,13 @@ export default function Review({ go }: { go: (s: Screen) => void }) {
             </button>
           ))
         ) : (
-          <button onClick={() => setFlipped(true)} className="col-span-4 rounded-2xl bg-slate-700 text-lg font-bold active:bg-slate-600">
+          <button onClick={flip} className="col-span-4 rounded-2xl bg-slate-700 text-lg font-bold active:bg-slate-600">
             정답 보기
           </button>
         )}
+      </div>
+      <div className="mt-1 grid h-5 grid-cols-4 gap-2 text-center text-xs text-slate-400 tabular-nums">
+        {preview && GRADES.map((g) => <span key={g.grade}>{formatInterval(+preview[g.grade].card.due - +preview[g.grade].log.review)}</span>)}
       </div>
     </>
   )

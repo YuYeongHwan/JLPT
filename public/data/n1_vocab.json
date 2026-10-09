@@ -1,0 +1,345 @@
+[
+ {
+  "id": 1,
+  "word": "曖昧",
+  "reading": "あいまい",
+  "meaning_ko": "애매함, 모호함",
+  "example_ja": "彼の返事は曖昧だった。",
+  "example_ko": "그의 대답은 애매했다.",
+  "kanji": [
+   "曖",
+   "昧"
+  ]
+ },
+ {
+  "id": 2,
+  "word": "斡旋",
+  "reading": "あっせん",
+  "meaning_ko": "알선, 주선",
+  "example_ja": "友人に仕事を斡旋してもらった。",
+  "example_ko": "친구가 일을 알선해 주었다.",
+  "kanji": [
+   "斡",
+   "旋"
+  ]
+ },
+ {
+  "id": 3,
+  "word": "委ねる",
+  "reading": "ゆだねる",
+  "meaning_ko": "맡기다, 위임하다",
+  "example_ja": "最終的な判断は彼に委ねる。",
+  "example_ko": "최종 판단은 그에게 맡긴다.",
+  "kanji": [
+   "委"
+  ]
+ },
+ {
+  "id": 4,
+  "word": "潔い",
+  "reading": "いさぎよい",
+  "meaning_ko": "깨끗하다, 미련 없다",
+  "example_ja": "彼の潔い態度に感心した。",
+  "example_ko": "그의 미련 없는 태도에 감탄했다.",
+  "kanji": [
+   "潔"
+  ]
+ },
+ {
+  "id": 5,
+  "word": "著しい",
+  "reading": "いちじるしい",
+  "meaning_ko": "현저하다",
+  "example_ja": "この一年で著しい進歩が見られた。",
+  "example_ko": "이 1년 동안 현저한 진보가 보였다.",
+  "kanji": [
+   "著"
+  ]
+ },
+ {
+  "id": 6,
+  "word": "怠る",
+  "reading": "おこたる",
+  "meaning_ko": "게을리하다, 소홀히 하다",
+  "example_ja": "注意を怠ると事故につながる。",
+  "example_ko": "주의를 게을리하면 사고로 이어진다.",
+  "kanji": [
+   "怠"
+  ]
+ },
+ {
+  "id": 7,
+  "word": "趣",
+  "reading": "おもむき",
+  "meaning_ko": "정취, 운치",
+  "example_ja": "この庭には独特の趣がある。",
+  "example_ko": "이 정원에는 독특한 운치가 있다.",
+  "kanji": [
+   "趣"
+  ]
+ },
+ {
+  "id": 8,
+  "word": "顧みる",
+  "reading": "かえりみる",
+  "meaning_ko": "돌아보다, 반성하다",
+  "example_ja": "自分の行動を顧みる必要がある。",
+  "example_ko": "자신의 행동을 돌아볼 필요가 있다.",
+  "kanji": [
+   "顧"
+  ]
+ },
+ {
+  "id": 9,
+  "word": "拒む",
+  "reading": "こばむ",
+  "meaning_ko": "거부하다",
+  "example_ja": "彼は取材を拒む姿勢を見せた。",
+  "example_ko": "그는 취재를 거부하는 자세를 보였다.",
+  "kanji": [
+   "拒"
+  ]
+ },
+ {
+  "id": 10,
+  "word": "懸念",
+  "reading": "けねん",
+  "meaning_ko": "우려, 염려",
+  "example_ja": "景気の先行きに懸念が広がっている。",
+  "example_ko": "경기 전망에 대한 우려가 퍼지고 있다.",
+  "kanji": [
+   "懸",
+   "念"
+  ]
+ },
+ {
+  "id": 11,
+  "word": "貢献",
+  "reading": "こうけん",
+  "meaning_ko": "공헌",
+  "example_ja": "地域社会に貢献したい。",
+  "example_ko": "지역 사회에 공헌하고 싶다.",
+  "kanji": [
+   "貢",
+   "献"
+  ]
+ },
+ {
+  "id": 12,
+  "word": "根拠",
+  "reading": "こんきょ",
+  "meaning_ko": "근거",
+  "example_ja": "その主張には根拠がない。",
+  "example_ko": "그 주장에는 근거가 없다.",
+  "kanji": [
+   "根",
+   "拠"
+  ]
+ },
+ {
+  "id": 13,
+  "word": "妥協",
+  "reading": "だきょう",
+  "meaning_ko": "타협",
+  "example_ja": "双方が妥協して合意に至った。",
+  "example_ko": "양측이 타협하여 합의에 이르렀다.",
+  "kanji": [
+   "妥",
+   "協"
+  ]
+ },
+ {
+  "id": 14,
+  "word": "培う",
+  "reading": "つちかう",
+  "meaning_ko": "기르다, 배양하다",
+  "example_ja": "経験を通じて判断力を培う。",
+  "example_ko": "경험을 통해 판단력을 기른다.",
+  "kanji": [
+   "培"
+  ]
+ },
+ {
+  "id": 15,
+  "word": "滞る",
+  "reading": "とどこおる",
+  "meaning_ko": "밀리다, 정체되다",
+  "example_ja": "支払いが滞ると信用を失う。",
+  "example_ko": "지불이 밀리면 신용을 잃는다.",
+  "kanji": [
+   "滞"
+  ]
+ },
+ {
+  "id": 16,
+  "word": "乏しい",
+  "reading": "とぼしい",
+  "meaning_ko": "부족하다, 모자라다",
+  "example_ja": "この地域は資源に乏しい。",
+  "example_ko": "이 지역은 자원이 부족하다.",
+  "kanji": [
+   "乏"
+  ]
+ },
+ {
+  "id": 17,
+  "word": "名残",
+  "reading": "なごり",
+  "meaning_ko": "자취, 여운",
+  "example_ja": "町には昔の名残がある。",
+  "example_ko": "마을에는 옛날의 자취가 남아 있다.",
+  "kanji": [
+   "名",
+   "残"
+  ]
+ },
+ {
+  "id": 18,
+  "word": "粘り強い",
+  "reading": "ねばりづよい",
+  "meaning_ko": "끈기 있다",
+  "example_ja": "粘り強い交渉の末、契約が成立した。",
+  "example_ko": "끈기 있는 협상 끝에 계약이 성립되었다.",
+  "kanji": [
+   "粘",
+   "強"
+  ]
+ },
+ {
+  "id": 19,
+  "word": "励む",
+  "reading": "はげむ",
+  "meaning_ko": "힘쓰다, 노력하다",
+  "example_ja": "彼は毎日練習に励む。",
+  "example_ko": "그는 매일 연습에 힘쓴다.",
+  "kanji": [
+   "励"
+  ]
+ },
+ {
+  "id": 20,
+  "word": "阻む",
+  "reading": "はばむ",
+  "meaning_ko": "막다, 저지하다",
+  "example_ja": "高い壁が行く手を阻む。",
+  "example_ko": "높은 벽이 앞길을 막는다.",
+  "kanji": [
+   "阻"
+  ]
+ },
+ {
+  "id": 21,
+  "word": "一律",
+  "reading": "いちりつ",
+  "meaning_ko": "일률, 균일",
+  "example_ja": "料金は一律千円です。",
+  "example_ko": "요금은 일률 천 엔입니다.",
+  "kanji": [
+   "一",
+   "律"
+  ]
+ },
+ {
+  "id": 22,
+  "word": "踏まえる",
+  "reading": "ふまえる",
+  "meaning_ko": "근거로 하다, 입각하다",
+  "example_ja": "現状を踏まえる必要がある。",
+  "example_ko": "현상을 근거로 할 필요가 있다.",
+  "kanji": [
+   "踏"
+  ]
+ },
+ {
+  "id": 23,
+  "word": "赴く",
+  "reading": "おもむく",
+  "meaning_ko": "향하다, 부임하다",
+  "example_ja": "彼は単身で海外へ赴く。",
+  "example_ko": "그는 단신으로 해외로 향한다.",
+  "kanji": [
+   "赴"
+  ]
+ },
+ {
+  "id": 24,
+  "word": "紛らわしい",
+  "reading": "まぎらわしい",
+  "meaning_ko": "헷갈리기 쉽다",
+  "example_ja": "紛らわしい表現は避けるべきだ。",
+  "example_ko": "헷갈리기 쉬운 표현은 피해야 한다.",
+  "kanji": [
+   "紛"
+  ]
+ },
+ {
+  "id": 25,
+  "word": "見舞う",
+  "reading": "みまう",
+  "meaning_ko": "문병하다, (재해가) 덮치다",
+  "example_ja": "入院中の友人を見舞う。",
+  "example_ko": "입원 중인 친구를 문병한다.",
+  "kanji": [
+   "見",
+   "舞"
+  ]
+ },
+ {
+  "id": 26,
+  "word": "目論む",
+  "reading": "もくろむ",
+  "meaning_ko": "꾀하다, 계획하다",
+  "example_ja": "彼は新事業で一儲けを目論む。",
+  "example_ko": "그는 새 사업으로 한몫 잡기를 꾀한다.",
+  "kanji": [
+   "目",
+   "論"
+  ]
+ },
+ {
+  "id": 27,
+  "word": "和やか",
+  "reading": "なごやか",
+  "meaning_ko": "온화함, 화기애애함",
+  "example_ja": "会議は和やかな雰囲気で進んだ。",
+  "example_ko": "회의는 화기애애한 분위기로 진행되었다.",
+  "kanji": [
+   "和"
+  ]
+ },
+ {
+  "id": 28,
+  "word": "煩わしい",
+  "reading": "わずらわしい",
+  "meaning_ko": "번거롭다, 귀찮다",
+  "example_ja": "役所の手続きが煩わしい。",
+  "example_ko": "관공서 절차가 번거롭다.",
+  "kanji": [
+   "煩"
+  ]
+ },
+ {
+  "id": 29,
+  "word": "弁解",
+  "reading": "べんかい",
+  "meaning_ko": "변명",
+  "example_ja": "今さら弁解しても遅い。",
+  "example_ko": "이제 와서 변명해도 늦었다.",
+  "kanji": [
+   "弁",
+   "解"
+  ]
+ },
+ {
+  "id": 30,
+  "word": "抱負",
+  "reading": "ほうふ",
+  "meaning_ko": "포부",
+  "example_ja": "新年の抱負を語る。",
+  "example_ko": "새해 포부를 말하다.",
+  "kanji": [
+   "抱",
+   "負"
+  ]
+ }
+]

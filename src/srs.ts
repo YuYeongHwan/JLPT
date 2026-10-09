@@ -5,7 +5,14 @@ const f = fsrs({ enable_fuzz: true })
 export const SESSION_MAX = 15
 export const DEFAULT_NEW_PER_DAY = 20
 
-export const dayStart = (now: Date) => new Date(new Date(now).setHours(0, 0, 0, 0))
+// 학습일 경계 = 로컬 새벽 4시. 03:59까지는 전날 학습일
+export const DAY_START_HOUR = 4
+export const dayStart = (now: Date) => {
+  const d = new Date(now)
+  if (d.getHours() < DAY_START_HOUR) d.setDate(d.getDate() - 1)
+  d.setHours(DAY_START_HOUR, 0, 0, 0)
+  return d
+}
 export const nextDayStart = (now: Date) => {
   const d = dayStart(now)
   d.setDate(d.getDate() + 1)
@@ -15,7 +22,9 @@ export const nextDayStart = (now: Date) => {
 // 오늘 출제할 카드. 같은 단어(형제)는 1장만, 복습 우선.
 // ponytail: 매번 카드 전체 스캔. 수만 장이 되면 due/state 인덱스 쿼리로.
 export async function todayQueue(now = new Date()) {
-  const active = (await db.cards.toArray()).filter((c) => !c.suspended && c.due <= now)
+  // 다음 경계 전에 due면 오늘 카드
+  const tomorrow = nextDayStart(now)
+  const active = (await db.cards.toArray()).filter((c) => !c.suspended && c.due < tomorrow)
   const used = new Set<string>()
   const once = (c: StoredCard) => !used.has(c.wordId) && !!used.add(c.wordId)
 
@@ -49,7 +58,7 @@ export async function buildSession(now = new Date()): Promise<StoredCard[]> {
 }
 
 // 평가 저장 + 오늘 due인 형제 카드는 다음 학습일로.
-// 반환값: 세션 안에서 다시 보여줘야 하면(10분 이내 due) 갱신된 카드
+// 반환값: 세션 안에서 다시 보여줘야 하면(학습 단계라 오늘 다시 due) 갱신된 카드
 export async function rate(card: StoredCard, grade: Grade, now = new Date()): Promise<StoredCard | null> {
   const { card: next, log } = f.next(card, now, grade)
   const updated = { ...card, ...next }
@@ -63,5 +72,5 @@ export async function rate(card: StoredCard, grade: Grade, now = new Date()): Pr
       .filter((c) => c.id !== card.id && c.due < tomorrow)
       .modify({ due: tomorrow })
   })
-  return next.due.getTime() - now.getTime() < 10 * 60_000 ? updated : null
+  return next.due < tomorrow ? updated : null
 }

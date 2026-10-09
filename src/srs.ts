@@ -4,6 +4,8 @@ import { db, getSetting, type StoredCard } from './db'
 const f = fsrs({ enable_fuzz: true })
 export const SESSION_MAX = 15
 export const DEFAULT_NEW_PER_DAY = 20
+export const DEFAULT_EXAM_DATE = '2026-12-06'
+export const FREEZE_DAYS = 14 // 시험 전 이 기간은 신규 없이 복습만
 
 // 학습일 경계 = 로컬 새벽 4시. 03:59까지는 전날 학습일
 export const DAY_START_HOUR = 4
@@ -17,6 +19,22 @@ export const nextDayStart = (now: Date) => {
   const d = dayStart(now)
   d.setDate(d.getDate() + 1)
   return d
+}
+
+// 시험까지 남은 일수(D-day), 권장 하루 신규 reading 수, 신규 중단 여부
+export async function examInfo(now = new Date()) {
+  const [y, m, d] = (await getSetting('examDate', DEFAULT_EXAM_DATE)).split('-').map(Number)
+  const t = dayStart(now)
+  // 달력 날짜끼리 비교. round로 서머타임 1시간 차이 흡수
+  const days = Math.round((+new Date(y, m - 1, d) - +new Date(t.getFullYear(), t.getMonth(), t.getDate())) / 86_400_000)
+  const remaining = await db.cards
+    .where('state')
+    .equals(State.New)
+    .filter((c) => c.type === 'reading' && !c.suspended)
+    .count()
+  const studyDays = days - FREEZE_DAYS
+  const frozen = days >= 0 && days <= FREEZE_DAYS && !(await getSetting('freezeOff', false))
+  return { days, recommended: studyDays > 0 ? Math.ceil(remaining / studyDays) : 0, frozen }
 }
 
 // 오늘 출제할 카드. 같은 단어(형제)는 1장만, 복습 우선.
@@ -35,7 +53,7 @@ export async function todayQueue(now = new Date()) {
 
   // 오늘 처음 학습한 카드 = state가 New였던 로그
   const newDone = await db.logs.where('review').aboveOrEqual(dayStart(now)).filter((l) => l.state === State.New).count()
-  const newPerDay = await getSetting('newPerDay', DEFAULT_NEW_PER_DAY)
+  const newPerDay = (await examInfo(now)).frozen ? 0 : await getSetting('newPerDay', DEFAULT_NEW_PER_DAY)
   const order = new Map((await db.words.toArray()).map((w) => [w.id, w.order]))
   // 신규는 reading 카드 먼저. context는 같은 단어 reading을 Good 이상으로 맞힌 뒤에만
   // ponytail: 로그 전체 스캔. 로그가 수십만 건이 되면 cardId 인덱스 쿼리로.

@@ -2,7 +2,7 @@ import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useState } from 'react'
 import type { Screen } from '../App'
 import { db, exportBackup, flaggedEntries, getSetting, importBackup, knownWords, restoreKnown, setSetting } from '../db'
-import { DEFAULT_NEW_PER_DAY } from '../srs'
+import { DEFAULT_EXAM_DATE, DEFAULT_NEW_PER_DAY } from '../srs'
 
 export default function Settings({ go }: { go: (s: Screen) => void }) {
   const [newPerDay, setNewPerDay] = useState(DEFAULT_NEW_PER_DAY)
@@ -10,6 +10,8 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
   const lastBackup = useLiveQuery(() => getSetting<Date | null>('lastBackup', null))
   const flagged = useLiveQuery(flaggedEntries)
   const known = useLiveQuery(knownWords)
+  const examDate = useLiveQuery(() => getSetting('examDate', DEFAULT_EXAM_DATE))
+  const freezeOff = useLiveQuery(() => getSetting('freezeOff', false))
   const [persisted, setPersisted] = useState<boolean | null>(null)
 
   useEffect(() => {
@@ -68,6 +70,21 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
           </ul>
         </details>
         <div className="flex-1" />
+        <div className="flex flex-col gap-3 rounded-2xl bg-slate-800 px-5 py-4">
+          <label className="flex items-center justify-between">
+            <span>시험일</span>
+            <input
+              type="date"
+              value={examDate ?? ''}
+              onChange={(e) => e.target.value && setSetting('examDate', e.target.value)}
+              className="rounded-lg bg-slate-700 px-3 py-2"
+            />
+          </label>
+          <label className="flex items-center justify-between gap-3 text-sm text-slate-300">
+            <span>시험 2주 전부터 신규 카드 자동 중단</span>
+            <input type="checkbox" checked={!freezeOff} onChange={(e) => setSetting('freezeOff', !e.target.checked)} className="h-5 w-5" />
+          </label>
+        </div>
         <div className="flex items-center justify-between rounded-2xl bg-slate-800 px-5 py-4">
           <span id="new-per-day">하루 신규 카드 수</span>
           <div className="flex items-center gap-2">

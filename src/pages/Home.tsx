@@ -1,11 +1,12 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import type { Screen } from '../App'
 import { backupStale, triageCandidates } from '../db'
-import { SESSION_MAX, todayCounts } from '../srs'
+import { examInfo, SESSION_MAX, todayCounts } from '../srs'
 
 export default function Home({ go }: { go: (s: Screen) => void }) {
   const counts = useLiveQuery(todayCounts)
   const stale = useLiveQuery(() => backupStale())
+  const exam = useLiveQuery(() => examInfo())
   const untriaged = useLiveQuery(async () => (await triageCandidates()).length)
   const total = (counts?.due ?? 0) + (counts?.newLeft ?? 0)
 
@@ -16,6 +17,12 @@ export default function Home({ go }: { go: (s: Screen) => void }) {
         <button onClick={() => go('settings')} className="mt-4 rounded-2xl bg-amber-500/15 px-5 py-3 text-left text-sm text-amber-300">
           마지막 백업 후 7일이 지났어요. 탭해서 백업하기 →
         </button>
+      )}
+      {exam && (
+        <p className="mt-4 rounded-2xl bg-slate-800 px-5 py-3 text-sm text-slate-300">
+          <b className="mr-2 text-base text-white">{exam.days > 0 ? `D-${exam.days}` : exam.days === 0 ? 'D-Day' : `D+${-exam.days}`}</b>
+          {exam.frozen ? '시험 2주 전: 신규 중단, 복습만' : exam.recommended > 0 && `권장 신규 하루 ${exam.recommended}개`}
+        </p>
       )}
       <div className="flex flex-1 flex-col justify-center gap-4">
         <Stat label="오늘 복습" value={counts?.due} color="text-sky-400" />

@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto'
 import { beforeEach, expect, test } from 'vitest'
 import { Rating, State } from 'ts-fsrs'
 import { db, setSetting, setTriage, syncVocab, type VocabEntry } from './db'
-import { buildSession, dayStart, nextDayStart, rate, schedule, SESSION_MAX, todayCounts } from './srs'
+import { buildSession, dayStart, examInfo, nextDayStart, rate, schedule, SESSION_MAX, todayCounts } from './srs'
 
 const at = (day: number, h: number, m = 0) => new Date(2026, 9, day, h, m) // 2026-10-{day} 로컬
 const vocab = (n: number): VocabEntry[] =>
@@ -104,4 +104,26 @@ test('신규 순서: 모른다 → 미분류 → 그 외', async () => {
   await setTriage('語3|ご3', 'unknown')
   await setTriage('語1|ご1', 'known')
   expect((await buildSession(at(10, 10))).map((c) => c.wordId)).toEqual(['語3|ご3', '語0|ご0', '語2|ご2'])
+})
+
+test('시험일: D-day, 권장 신규 수, 2주 전 신규 중단·해제', async () => {
+  await syncVocab(vocab(30))
+  await setSetting('examDate', '2026-12-06')
+  // 10/31 → 36일 남음, 신규 reading 30장 / (36 - 14) = 1.36 → 2
+  expect(await examInfo(at(31, 10))).toEqual({ days: 36, recommended: 2, frozen: false })
+  expect(await examInfo(new Date(2026, 10, 1, 10))).toEqual({ days: 35, recommended: 2, frozen: false })
+  // 새벽 4시 전은 전날 학습일
+  expect((await examInfo(new Date(2026, 10, 22, 3))).days).toBe(15)
+
+  const twoWeeks = new Date(2026, 10, 22, 10) // D-14
+  expect(await examInfo(twoWeeks)).toEqual({ days: 14, recommended: 0, frozen: true })
+  expect((await todayCounts(twoWeeks)).newLeft).toBe(0)
+
+  await setSetting('freezeOff', true)
+  expect((await examInfo(twoWeeks)).frozen).toBe(false)
+  expect((await todayCounts(twoWeeks)).newLeft).toBe(20)
+
+  // 시험 후엔 중단 없음
+  await setSetting('freezeOff', false)
+  expect((await examInfo(new Date(2026, 11, 7, 10))).frozen).toBe(false)
 })

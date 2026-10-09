@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto'
 import { beforeEach, expect, test } from 'vitest'
 import { Rating, State } from 'ts-fsrs'
-import { db, setSetting, syncVocab, type VocabEntry } from './db'
+import { db, setSetting, setTriage, syncVocab, type VocabEntry } from './db'
 import { buildSession, dayStart, nextDayStart, rate, schedule, SESSION_MAX, todayCounts } from './srs'
 
 const at = (day: number, h: number, m = 0) => new Date(2026, 9, day, h, m) // 2026-10-{day} 로컬
@@ -80,4 +80,28 @@ test('sync: 빠진 단어 suspended, 빈칸 매칭 실패면 문맥 카드 없�
   expect((await db.cards.get('語0|ご0:reading'))!.suspended).toBeFalsy()
   expect((await db.cards.get('語1|ご1:context'))!.suspended).toBe(true)
   expect((await buildSession(new Date())).map((c) => c.wordId)).toEqual(['語0|ご0', '語1|ご1'])
+})
+
+test('신규 카드: reading 먼저, context는 reading Good 이상 후에만', async () => {
+  await syncVocab(vocab(2))
+  const now = at(10, 10)
+  expect((await buildSession(now)).map((c) => c.id)).toEqual(['語0|ご0:reading', '語1|ご1:reading'])
+
+  // Again만으로는 context 안 열림
+  const r0 = (await db.cards.get('語0|ご0:reading'))!
+  await rate(r0, schedule(r0, now)[Rating.Again], now)
+  const next = at(11, 10)
+  expect((await buildSession(next)).some((c) => c.id === '語0|ご0:context')).toBe(false)
+
+  // Good 이상 후 (형제 분리로 다음 학습일부터) 신규 대상. Easy로 학습 단계를 건너뛰어 reading이 그날 due가 아니게
+  const r1 = (await db.cards.get('語1|ご1:reading'))!
+  await rate(r1, schedule(r1, next)[Rating.Easy], next)
+  expect((await buildSession(at(12, 10))).some((c) => c.id === '語1|ご1:context')).toBe(true)
+})
+
+test('신규 순서: 모른다 → 미분류 → 그 외', async () => {
+  await syncVocab(vocab(4))
+  await setTriage('語3|ご3', 'unknown')
+  await setTriage('語1|ご1', 'known')
+  expect((await buildSession(at(10, 10))).map((c) => c.wordId)).toEqual(['語3|ご3', '語0|ご0', '語2|ご2'])
 })

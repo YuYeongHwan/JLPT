@@ -1,4 +1,4 @@
-import { fsrs, State, type RecordLogItem } from 'ts-fsrs'
+import { fsrs, Rating, State, type RecordLogItem } from 'ts-fsrs'
 import { db, getSetting, type StoredCard } from './db'
 
 const f = fsrs({ enable_fuzz: true })
@@ -37,9 +37,22 @@ export async function todayQueue(now = new Date()) {
   const newDone = await db.logs.where('review').aboveOrEqual(dayStart(now)).filter((l) => l.state === State.New).count()
   const newPerDay = await getSetting('newPerDay', DEFAULT_NEW_PER_DAY)
   const order = new Map((await db.words.toArray()).map((w) => [w.id, w.order]))
+  // 신규는 reading 카드 먼저. context는 같은 단어 reading을 Good 이상으로 맞힌 뒤에만
+  // ponytail: 로그 전체 스캔. 로그가 수십만 건이 되면 cardId 인덱스 쿼리로.
+  const readingOk = new Set(
+    (await db.logs.filter((l) => l.rating >= Rating.Good && l.cardId.endsWith(':reading')).toArray()).map((l) =>
+      l.cardId.slice(0, -':reading'.length),
+    ),
+  )
+  // 순서: 분류 '모른다' → 미분류 → 그 외
+  const triage = new Map((await db.triage.toArray()).map((t) => [t.wordId, t.value]))
+  const rank = (c: StoredCard) => {
+    const t = triage.get(c.wordId)
+    return t === 'unknown' ? 0 : t === undefined ? 1 : 2
+  }
   const fresh = active
-    .filter((c) => c.state === State.New)
-    .sort((a, b) => order.get(a.wordId)! - order.get(b.wordId)! || (a.type === 'reading' ? -1 : 1))
+    .filter((c) => c.state === State.New && (c.type === 'reading' || readingOk.has(c.wordId)))
+    .sort((a, b) => rank(a) - rank(b) || order.get(a.wordId)! - order.get(b.wordId)! || (a.type === 'reading' ? -1 : 1))
     .filter(once)
     .slice(0, Math.max(0, newPerDay - newDone))
 

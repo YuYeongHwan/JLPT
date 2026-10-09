@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Rating, type Grade } from 'ts-fsrs'
 import type { Screen } from '../App'
-import { db, type StoredCard, type Word } from '../db'
+import { blankTarget, db, type StoredCard, type Word } from '../db'
 import { buildSession, rate } from '../srs'
 
 const GRADES: { grade: Grade; label: string; cls: string }[] = [
@@ -92,13 +92,14 @@ function ReadingFace({ word, flipped }: { word: Word; flipped: boolean }) {
 }
 
 function ContextFace({ word, flipped }: { word: Word; flipped: boolean }) {
-  const [before, ...rest] = word.example_ja.split(word.word)
+  const target = blankTarget(word)!
+  const [before, ...rest] = word.example_ja.split(target)
   return (
     <>
       <p className="text-2xl leading-relaxed">
         {before}
-        <span className={flipped ? 'font-bold text-emerald-400' : 'text-slate-500'}>{flipped ? word.word : '＿＿＿'}</span>
-        {rest.join(word.word)}
+        <span className={flipped ? 'font-bold text-emerald-400' : 'text-slate-500'}>{flipped ? target : '＿＿＿'}</span>
+        {rest.join(target)}
       </p>
       {!flipped && <p className="text-slate-400" lang="ko">{word.example_ko}</p>}
       {flipped && <Answer word={word} hideExample />}

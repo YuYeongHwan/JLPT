@@ -28,22 +28,24 @@
   "word": "委ねる",
   "reading": "ゆだねる",
   "meaning_ko": "맡기다, 위임하다",
-  "example_ja": "最終的な判断は彼に委ねる。",
-  "example_ko": "최종 판단은 그에게 맡긴다.",
+  "example_ja": "最終的な判断は彼に委ねた。",
+  "example_ko": "최종 판단은 그에게 맡겼다.",
   "kanji": [
    "委"
-  ]
+  ],
+  "example_target": "委ねた"
  },
  {
   "id": 4,
   "word": "潔い",
   "reading": "いさぎよい",
   "meaning_ko": "깨끗하다, 미련 없다",
-  "example_ja": "彼の潔い態度に感心した。",
-  "example_ko": "그의 미련 없는 태도에 감탄했다.",
+  "example_ja": "負けを潔く認めた。",
+  "example_ko": "패배를 깨끗이 인정했다.",
   "kanji": [
    "潔"
-  ]
+  ],
+  "example_target": "潔く"
  },
  {
   "id": 5,
@@ -210,11 +212,12 @@
   "word": "励む",
   "reading": "はげむ",
   "meaning_ko": "힘쓰다, 노력하다",
-  "example_ja": "彼は毎日練習に励む。",
-  "example_ko": "그는 매일 연습에 힘쓴다.",
+  "example_ja": "彼は毎日練習に励んでいる。",
+  "example_ko": "그는 매일 연습에 힘쓰고 있다.",
   "kanji": [
    "励"
-  ]
+  ],
+  "example_target": "励んで"
  },
  {
   "id": 20,

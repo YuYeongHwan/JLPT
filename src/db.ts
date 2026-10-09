@@ -8,7 +8,13 @@ export interface Word {
   meaning_ko: string
   example_ja: string
   example_ko: string
+  example_target?: string // 예문 속 활용형 (예: 潔く). 없으면 word로 매칭
   kanji: string[]
+}
+
+// 문맥 카드 빈칸에 들어갈 예문 속 문자열. 매칭 실패면 null → 문맥 카드 없음
+export function blankTarget(w: Word): string | null {
+  return [w.example_target, w.word].find((t) => t && w.example_ja.includes(t)) ?? null
 }
 export type CardType = 'reading' | 'context'
 export interface StoredCard extends Card {
@@ -46,8 +52,10 @@ export async function syncVocab() {
     await db.words.bulkPut(words)
     const existing = new Set(await db.cards.toCollection().primaryKeys())
     const now = new Date()
+    const unmatched = words.filter((w) => !blankTarget(w)).map((w) => w.word)
+    if (unmatched.length) console.warn('예문에서 빈칸 매칭 실패 → 문맥 카드 생략:', unmatched)
     const fresh = words.flatMap((w) =>
-      (['reading', 'context'] as const)
+      (blankTarget(w) ? (['reading', 'context'] as const) : (['reading'] as const))
         .filter((type) => !existing.has(`${w.id}:${type}`))
         .map((type) => ({ ...createEmptyCard(now), id: `${w.id}:${type}`, wordId: w.id, type })),
     )

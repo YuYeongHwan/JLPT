@@ -13,7 +13,7 @@ const GRADES: { grade: Grade; label: string; cls: string }[] = [
 
 export default function Review({ go }: { go: (s: Screen) => void }) {
   const [queue, setQueue] = useState<StoredCard[] | null>(null)
-  const [words, setWords] = useState(new Map<number, Word>())
+  const [words, setWords] = useState(new Map<string, Word>())
   const [flipped, setFlipped] = useState(false)
   const [done, setDone] = useState(0)
 

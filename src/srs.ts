@@ -9,24 +9,25 @@ const startOfToday = () => new Date(new Date().setHours(0, 0, 0, 0))
 
 export async function todayCounts() {
   const now = new Date()
-  const due = await db.cards.where('due').belowOrEqual(now).filter((c) => c.state !== State.New).count()
+  const due = await db.cards.where('due').belowOrEqual(now).filter((c) => c.state !== State.New && !c.suspended).count()
   // 오늘 처음 학습한 카드 = state가 New였던 로그
   const newDone = await db.logs.where('review').aboveOrEqual(startOfToday()).filter((l) => l.state === State.New).count()
   const newPerDay = await getSetting('newPerDay', DEFAULT_NEW_PER_DAY)
-  const newTotal = await db.cards.where('state').equals(State.New).count()
+  const newTotal = await db.cards.where('state').equals(State.New).filter((c) => !c.suspended).count()
   return { due, newLeft: Math.max(0, Math.min(newPerDay - newDone, newTotal)) }
 }
 
 // 복습 카드 우선, 남는 자리에 신규 카드
 export async function buildSession(): Promise<StoredCard[]> {
   const now = new Date()
-  const due = (await db.cards.where('due').belowOrEqual(now).filter((c) => c.state !== State.New).sortBy('due'))
+  const due = (await db.cards.where('due').belowOrEqual(now).filter((c) => c.state !== State.New && !c.suspended).sortBy('due'))
     .slice(0, SESSION_MAX)
   const { newLeft } = await todayCounts()
   const n = Math.min(newLeft, SESSION_MAX - due.length)
   // ponytail: 같은 단어의 reading/context가 같은 날 나올 수 있음. 거슬리면 sibling bury 추가.
-  const fresh = n > 0 ? (await db.cards.where('state').equals(State.New).toArray())
-          .sort((a, b) => a.wordId - b.wordId || (a.type === 'reading' ? -1 : 1))
+  const order = new Map((await db.words.toArray()).map((w) => [w.id, w.order]))
+  const fresh = n > 0 ? (await db.cards.where('state').equals(State.New).filter((c) => !c.suspended).toArray())
+          .sort((a, b) => order.get(a.wordId)! - order.get(b.wordId)! || (a.type === 'reading' ? -1 : 1))
           .slice(0, n) : []
   return [...due, ...fresh]
 }

@@ -1,7 +1,7 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useState } from 'react'
 import type { Screen } from '../App'
-import { db, exportBackup, flaggedEntries, getSetting, importBackup, setSetting } from '../db'
+import { db, exportBackup, flaggedEntries, getSetting, importBackup, knownWords, restoreKnown, setSetting } from '../db'
 import { DEFAULT_NEW_PER_DAY } from '../srs'
 
 export default function Settings({ go }: { go: (s: Screen) => void }) {
@@ -9,6 +9,7 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
   const [msg, setMsg] = useState('')
   const lastBackup = useLiveQuery(() => getSetting<Date | null>('lastBackup', null))
   const flagged = useLiveQuery(flaggedEntries)
+  const known = useLiveQuery(knownWords)
   const [persisted, setPersisted] = useState<boolean | null>(null)
 
   useEffect(() => {
@@ -54,6 +55,17 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
           <button onClick={exportFlagged} disabled={!flagged?.length} className="mt-3 h-11 w-full rounded-xl bg-slate-700 text-sm disabled:opacity-40">
             표시한 단어 JSON 내보내기
           </button>
+        </details>
+        <details className="rounded-2xl bg-slate-800 px-5 py-4">
+          <summary className="cursor-pointer">'안다'로 분류한 단어 {known?.length ?? 0}개</summary>
+          <ul className="mt-3 max-h-48 space-y-1 overflow-y-auto text-sm text-slate-300" lang="ja">
+            {known?.map((w) => (
+              <li key={w.id} className="flex items-center justify-between gap-2">
+                <span>{w.word}（{w.reading}）</span>
+                <button onClick={() => restoreKnown(w.id)} className="rounded-lg bg-slate-700 px-3 py-1 text-xs" lang="ko">복구</button>
+              </li>
+            ))}
+          </ul>
         </details>
         <div className="flex-1" />
         <div className="flex items-center justify-between rounded-2xl bg-slate-800 px-5 py-4">

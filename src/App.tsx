@@ -3,8 +3,9 @@ import { syncVocab } from './db'
 import Home from './pages/Home'
 import Review from './pages/Review'
 import Settings from './pages/Settings'
+import Triage from './pages/Triage'
 
-export type Screen = 'home' | 'review' | 'settings'
+export type Screen = 'home' | 'review' | 'settings' | 'triage'
 
 export default function App() {
   const [screen, setScreen] = useState<Screen>('home')
@@ -23,6 +24,7 @@ export default function App() {
       {screen === 'home' && <Home go={setScreen} />}
       {screen === 'review' && <Review go={setScreen} />}
       {screen === 'settings' && <Settings go={setScreen} />}
+      {screen === 'triage' && <Triage go={setScreen} />}
     </main>
   )
 }

@@ -1,5 +1,5 @@
 import Dexie, { type EntityTable } from 'dexie'
-import { createEmptyCard, type Card, type ReviewLog } from 'ts-fsrs'
+import { createEmptyCard, State, type Card, type ReviewLog } from 'ts-fsrs'
 
 // public/data/n1_vocab.json 한 항목
 export interface VocabEntry {
@@ -41,8 +41,15 @@ export interface Flag {
   at: Date
 }
 
+// 단어 분류 결과. known이면 카드 전부 suspended
+export interface Triage {
+  wordId: string
+  value: 'known' | 'unknown'
+  at: Date
+}
+
 // Dexie 버전 = 백업 schemaVersion. 올릴 때 importBackup에 이전 버전 마이그레이션 추가
-export const SCHEMA_VERSION = 3
+export const SCHEMA_VERSION = 4
 
 export const db = new Dexie('jlpt-n1') as Dexie & {
   words: EntityTable<Word, 'id'>
@@ -50,6 +57,7 @@ export const db = new Dexie('jlpt-n1') as Dexie & {
   logs: EntityTable<StoredLog, 'id'>
   meta: EntityTable<Meta, 'key'>
   flags: EntityTable<Flag, 'wordId'>
+  triage: EntityTable<Triage, 'wordId'>
 }
 db.version(2)
   .stores({
@@ -61,11 +69,39 @@ db.version(2)
   // v1은 순번 id라 호환 불가 → 전부 비움
   .upgrade((tx) => Promise.all(['words', 'cards', 'logs', 'meta'].map((t) => tx.table(t).clear())))
 db.version(3).stores({ flags: 'wordId' })
+db.version(4).stores({ triage: 'wordId, value' })
 
 export const wordId = (w: VocabEntry) => `${w.word}|${w.reading}`
 
 export const toggleFlag = async (id: string) =>
   (await db.flags.get(id)) ? db.flags.delete(id) : db.flags.put({ wordId: id, at: new Date() })
+
+// 분류 대상: 아직 분류 안 했고, 카드가 전부 신규(한 번도 복습 안 함)인 단어. JSON 순서대로
+export async function triageCandidates(): Promise<Word[]> {
+  const triaged = new Set(await db.triage.toCollection().primaryKeys())
+  const touched = new Set((await db.cards.filter((c) => c.state !== State.New || !!c.suspended).toArray()).map((c) => c.wordId))
+  return (await db.words.toArray())
+    .filter((w) => !triaged.has(w.id) && !touched.has(w.id))
+    .sort((a, b) => a.order - b.order)
+}
+
+export const setTriage = (id: string, value: Triage['value']) =>
+  db.transaction('rw', db.triage, db.cards, async () => {
+    await db.triage.put({ wordId: id, value, at: new Date() })
+    if (value === 'known') await db.cards.where('wordId').equals(id).modify({ suspended: true })
+  })
+
+// known 복구. ponytail: JSON에서 빠진 단어도 일단 풀림 → 다음 실행의 syncVocab이 다시 suspended 처리
+export const restoreKnown = (id: string) =>
+  db.transaction('rw', db.triage, db.cards, async () => {
+    await db.triage.delete(id)
+    await db.cards.where('wordId').equals(id).modify({ suspended: false })
+  })
+
+export async function knownWords(): Promise<Word[]> {
+  const ids = await db.triage.where('value').equals('known').primaryKeys()
+  return (await db.words.bulkGet(ids)).filter((w) => w !== undefined)
+}
 
 // 플래그된 단어를 n1_vocab.json 형식 그대로 (id/order 제외)
 export async function flaggedEntries(): Promise<VocabEntry[]> {
@@ -75,7 +111,7 @@ export async function flaggedEntries(): Promise<VocabEntry[]> {
 }
 
 // 매 실행마다 JSON → Dexie 동기화. 전체 데이터로 바꿀 땐 public/data/n1_vocab.json 만 교체.
-// 단어는 덮어쓰고, 카드는 없는 것만 추가, JSON에서 빠진 카드는 suspended (진행도 보존).
+// 단어는 덮어쓰고, 카드는 없는 것만 추가, JSON에서 빠졌거나 known 분류된 카드는 suspended (진행도 보존).
 export async function syncVocab(entries?: VocabEntry[]) {
   entries ??= await (await fetch('/data/n1_vocab.json')).json()
   const words: Word[] = entries!.map((e, order) => ({ ...e, id: wordId(e), order }))
@@ -85,19 +121,21 @@ export async function syncVocab(entries?: VocabEntry[]) {
   const expected = new Set(
     words.flatMap((w) => (blankTarget(w) ? ['reading', 'context'] : ['reading']).map((t) => `${w.id}:${t}`)),
   )
-  await db.transaction('rw', db.words, db.cards, async () => {
+  await db.transaction('rw', db.words, db.cards, db.triage, async () => {
     await db.words.bulkPut(words)
+    const known = new Set(await db.triage.where('value').equals('known').primaryKeys())
+    const off = (id: string, wid: string) => !expected.has(id) || known.has(wid)
     const existing = await db.cards.toArray()
     const have = new Set(existing.map((c) => c.id))
     const toggled = existing
-      .filter((c) => !!c.suspended === expected.has(c.id))
-      .map((c) => ({ ...c, suspended: !expected.has(c.id) }))
+      .filter((c) => !!c.suspended !== off(c.id, c.wordId))
+      .map((c) => ({ ...c, suspended: off(c.id, c.wordId) }))
     const now = new Date()
     const fresh = [...expected]
       .filter((id) => !have.has(id))
       .map((id) => {
         const [wid, type] = id.split(':') as [string, CardType]
-        return { ...createEmptyCard(now), id, wordId: wid, type }
+        return { ...createEmptyCard(now), id, wordId: wid, type, suspended: known.has(wid) }
       })
     await db.cards.bulkPut([...toggled, ...fresh])
   })
@@ -115,7 +153,7 @@ export async function backupStale(now = new Date()) {
   return !!since && +now - +since >= 7 * 86_400_000
 }
 
-// 백업: 학습 상태(cards, logs, meta)만. 단어는 JSON 파일이 원본.
+// 백업: 학습 상태(cards, logs, meta, flags, triage)만. 단어는 JSON 파일이 원본.
 export async function exportBackup() {
   await setSetting('lastBackup', new Date())
   return JSON.stringify({
@@ -124,20 +162,24 @@ export async function exportBackup() {
     logs: await db.logs.toArray(),
     meta: await db.meta.toArray(),
     flags: await db.flags.toArray(),
+    triage: await db.triage.toArray(),
   })
 }
 
 const ISO = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/
 export async function importBackup(text: string) {
   const data = JSON.parse(text, (_, v) => (typeof v === 'string' && ISO.test(v) ? new Date(v) : v))
-  if (data?.schemaVersion === 2) data.flags = [] // v2 → v3: flags 테이블만 추가됨
-  else if (data?.schemaVersion !== SCHEMA_VERSION) throw new Error('호환되지 않는 백업입니다')
-  if (![data.cards, data.logs, data.meta, data.flags].every(Array.isArray)) throw new Error('올바른 백업 파일이 아닙니다')
-  await db.transaction('rw', [db.cards, db.logs, db.meta, db.flags], async () => {
-    await Promise.all([db.cards.clear(), db.logs.clear(), db.meta.clear(), db.flags.clear()])
+  // 이전 버전은 추가된 테이블만 빈 값으로 채워 순서대로 올림
+  if (data?.schemaVersion === 2) Object.assign(data, { schemaVersion: 3, flags: [] })
+  if (data?.schemaVersion === 3) Object.assign(data, { schemaVersion: 4, triage: [] })
+  if (data?.schemaVersion !== SCHEMA_VERSION) throw new Error('호환되지 않는 백업입니다')
+  if (![data.cards, data.logs, data.meta, data.flags, data.triage].every(Array.isArray)) throw new Error('올바른 백업 파일이 아닙니다')
+  await db.transaction('rw', [db.cards, db.logs, db.meta, db.flags, db.triage], async () => {
+    await Promise.all([db.cards.clear(), db.logs.clear(), db.meta.clear(), db.flags.clear(), db.triage.clear()])
     await db.cards.bulkPut(data.cards)
     await db.logs.bulkPut(data.logs)
     await db.meta.bulkPut(data.meta)
     await db.flags.bulkPut(data.flags)
+    await db.triage.bulkPut(data.triage)
   })
 }

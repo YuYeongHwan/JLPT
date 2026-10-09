@@ -1,11 +1,12 @@
 import { useLiveQuery } from 'dexie-react-hooks'
 import type { Screen } from '../App'
-import { backupStale } from '../db'
+import { backupStale, triageCandidates } from '../db'
 import { SESSION_MAX, todayCounts } from '../srs'
 
 export default function Home({ go }: { go: (s: Screen) => void }) {
   const counts = useLiveQuery(todayCounts)
   const stale = useLiveQuery(() => backupStale())
+  const untriaged = useLiveQuery(async () => (await triageCandidates()).length)
   const total = (counts?.due ?? 0) + (counts?.newLeft ?? 0)
 
   return (
@@ -28,6 +29,11 @@ export default function Home({ go }: { go: (s: Screen) => void }) {
         >
           {total === 0 ? '오늘 할 카드 없음 🎉' : `5분 세션 시작 (${Math.min(total, SESSION_MAX)}장)`}
         </button>
+        {!!untriaged && (
+          <button onClick={() => go('triage')} className="h-12 rounded-2xl bg-slate-800 text-slate-300 active:bg-slate-700">
+            단어 분류 (남은 {untriaged})
+          </button>
+        )}
         <button onClick={() => go('settings')} className="h-12 rounded-2xl bg-slate-800 text-slate-300 active:bg-slate-700">
           설정
         </button>

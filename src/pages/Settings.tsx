@@ -43,20 +43,21 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
     <>
       <h1 className="text-xl font-bold">설정</h1>
       <div className="flex flex-1 flex-col justify-end gap-4">
-        <label className="flex items-center justify-between rounded-2xl bg-slate-800 px-5 py-4">
-          <span>하루 신규 카드 수</span>
+        <div className="flex items-center justify-between rounded-2xl bg-slate-800 px-5 py-4">
+          <span id="new-per-day">하루 신규 카드 수</span>
           <div className="flex items-center gap-2">
             <button onClick={() => changeNew(newPerDay - 5)} className="h-11 w-11 rounded-xl bg-slate-700 text-xl">−</button>
             <input
               type="number"
               inputMode="numeric"
+              aria-labelledby="new-per-day"
               value={newPerDay}
               onChange={(e) => changeNew(+e.target.value)}
               className="w-14 bg-transparent text-center text-xl tabular-nums"
             />
             <button onClick={() => changeNew(newPerDay + 5)} className="h-11 w-11 rounded-xl bg-slate-700 text-xl">+</button>
           </div>
-        </label>
+        </div>
         <p className="px-1 text-sm text-slate-500">카드는 단어당 2장(읽기·문맥)이에요.</p>
         <p className="px-1 text-sm text-slate-400">
           마지막 백업: {lastBackup ? lastBackup.toLocaleString('ko-KR') : '없음'}

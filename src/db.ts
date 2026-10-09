@@ -9,7 +9,7 @@ export interface VocabEntry {
   example_ja: string
   example_ko: string
   example_target?: string // 예문 속 활용형 (예: 潔く). 없으면 word로 매칭
-  kanji: string[]
+  pos?: '명사' | '동사' | 'い형용사' | 'な형용사' | '부사' | '기타'
 }
 export interface Word extends VocabEntry {
   id: string // `${word}|${reading}` — JSON 순서가 바뀌어도 고정

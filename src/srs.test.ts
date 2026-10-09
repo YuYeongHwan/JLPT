@@ -7,7 +7,7 @@ import { buildSession, dayStart, nextDayStart, rate, schedule, SESSION_MAX, toda
 const at = (day: number, h: number, m = 0) => new Date(2026, 9, day, h, m) // 2026-10-{day} 로컬
 const vocab = (n: number): VocabEntry[] =>
   Array.from({ length: n }, (_, i) => ({
-    word: `語${i}`, reading: `ご${i}`, meaning_ko: '', example_ja: `語${i}です。`, example_ko: '', kanji: [],
+    word: `語${i}`, reading: `ご${i}`, meaning_ko: '', example_ja: `語${i}です。`, example_ko: '',
   }))
 const good = (id: string, now: Date) => db.cards.get(id).then((c) => rate(c!, schedule(c!, now)[Rating.Good], now))
 

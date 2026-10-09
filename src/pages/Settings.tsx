@@ -1,3 +1,4 @@
+import { useLiveQuery } from 'dexie-react-hooks'
 import { useEffect, useState } from 'react'
 import type { Screen } from '../App'
 import { exportBackup, getSetting, importBackup, setSetting } from '../db'
@@ -6,6 +7,7 @@ import { DEFAULT_NEW_PER_DAY } from '../srs'
 export default function Settings({ go }: { go: (s: Screen) => void }) {
   const [newPerDay, setNewPerDay] = useState(DEFAULT_NEW_PER_DAY)
   const [msg, setMsg] = useState('')
+  const lastBackup = useLiveQuery(() => getSetting<Date | null>('lastBackup', null))
 
   useEffect(() => {
     getSetting('newPerDay', DEFAULT_NEW_PER_DAY).then(setNewPerDay)
@@ -56,6 +58,9 @@ export default function Settings({ go }: { go: (s: Screen) => void }) {
           </div>
         </label>
         <p className="px-1 text-sm text-slate-500">카드는 단어당 2장(읽기·문맥)이에요.</p>
+        <p className="px-1 text-sm text-slate-400">
+          마지막 백업: {lastBackup ? lastBackup.toLocaleString('ko-KR') : '없음'}
+        </p>
         {msg && <p className="px-1 text-sm text-sky-400">{msg}</p>}
         <button onClick={doExport} className="h-14 rounded-2xl bg-slate-800 active:bg-slate-700">백업 내보내기 (JSON)</button>
         <label className="flex h-14 items-center justify-center rounded-2xl bg-slate-800 active:bg-slate-700">

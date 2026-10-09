@@ -83,6 +83,7 @@ export async function syncVocab(entries?: VocabEntry[]) {
       })
     await db.cards.bulkPut([...toggled, ...fresh])
   })
+  if (!(await db.meta.get('installedAt'))) await setSetting('installedAt', new Date())
 }
 
 export async function getSetting<T>(key: string, fallback: T): Promise<T> {
@@ -90,8 +91,15 @@ export async function getSetting<T>(key: string, fallback: T): Promise<T> {
 }
 export const setSetting = (key: string, value: unknown) => db.meta.put({ key, value })
 
+// 마지막 백업(없으면 설치 시각)부터 7일 이상 지났나
+export async function backupStale(now = new Date()) {
+  const since = (await getSetting<Date | null>('lastBackup', null)) ?? (await getSetting<Date | null>('installedAt', null))
+  return !!since && +now - +since >= 7 * 86_400_000
+}
+
 // 백업: 학습 상태(cards, logs, meta)만. 단어는 JSON 파일이 원본.
 export async function exportBackup() {
+  await setSetting('lastBackup', new Date())
   return JSON.stringify({
     schemaVersion: SCHEMA_VERSION,
     cards: await db.cards.toArray(),

@@ -12,7 +12,7 @@ export interface VocabEntry {
   pos?: '명사' | '동사' | 'い형용사' | 'な형용사' | '부사' | '기타'
 }
 export interface Word extends VocabEntry {
-  id: string // `${word}|${reading}` — JSON 순서가 바뀌어도 고정
+  id: string // `${word}|${reading}`. JSON 순서가 바뀌어도 고정
   order: number // JSON 내 순서 = 신규 카드 출제 순서
 }
 

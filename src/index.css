@@ -54,27 +54,24 @@
   --radius-sm: 4px;
 }
 
-html,
-body {
-  height: 100%;
-  background: var(--paper);
-  color: var(--ink);
-}
-#root {
-  height: 100dvh;
-}
-body {
-  overscroll-behavior: none;
-  -webkit-tap-highlight-color: transparent;
-  font-variant-numeric: tabular-nums;
-}
-input,
-button {
-  font: inherit;
-  color: inherit;
-}
-input[type='checkbox'] {
-  accent-color: var(--ink);
+@layer base {
+  html,
+  body {
+    height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+  }
+  #root {
+    height: 100dvh;
+  }
+  body {
+    overscroll-behavior: none;
+    -webkit-tap-highlight-color: transparent;
+    font-variant-numeric: tabular-nums;
+  }
+  input[type='checkbox'] {
+    accent-color: var(--ink);
+  }
 }
 
 /* 종이 결: 고정 레이어 한 장, 스크롤 영역엔 안 씀 */

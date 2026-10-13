@@ -1,5 +1,5 @@
 import 'fake-indexeddb/auto'
-import { beforeEach, expect, test } from 'vitest'
+import { afterEach, beforeEach, expect, test, vi } from 'vitest'
 import { Rating, State } from 'ts-fsrs'
 import { db, setSetting, setTriage, syncVocab, type VocabEntry } from './db'
 import { buildSession, dayStart, examInfo, nextDayStart, rate, schedule, SESSION_MAX, todayCounts } from './srs'
@@ -12,7 +12,13 @@ const vocab = (n: number): VocabEntry[] =>
 const good = (id: string, now: Date) => db.cards.get(id).then((c) => rate(c!, schedule(c!, now)[Rating.Good], now))
 
 beforeEach(async () => {
+  // 카드 생성 시각(syncVocab의 new Date())을 테스트 시점들보다 앞으로 고정. 실제 날짜와 무관하게
+  vi.useFakeTimers({ toFake: ['Date'] })
+  vi.setSystemTime(new Date(2026, 9, 1))
   await Promise.all(db.tables.map((t) => t.clear()))
+})
+afterEach(() => {
+  vi.useRealTimers()
 })
 
 test('세션: 복습 카드가 due 순으로 먼저, 최대 15장', async () => {

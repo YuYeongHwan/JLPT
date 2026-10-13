@@ -5,11 +5,11 @@ import type { Screen } from '../App'
 import { blankTarget, db, toggleFlag, type StoredCard, type Word } from '../db'
 import { buildSession, formatInterval, rate, schedule } from '../srs'
 
-const GRADES: { grade: Grade; label: string; cls: string }[] = [
-  { grade: Rating.Again, label: 'Again', cls: 'bg-red-500/90 active:bg-red-600' },
-  { grade: Rating.Hard, label: 'Hard', cls: 'bg-amber-500/90 active:bg-amber-600' },
-  { grade: Rating.Good, label: 'Good', cls: 'bg-emerald-500/90 active:bg-emerald-600' },
-  { grade: Rating.Easy, label: 'Easy', cls: 'bg-sky-500/90 active:bg-sky-600' },
+const GRADES: { grade: Grade; label: string; accent?: boolean }[] = [
+  { grade: Rating.Again, label: 'もう一度', accent: true },
+  { grade: Rating.Hard, label: '難しい' },
+  { grade: Rating.Good, label: '良い' },
+  { grade: Rating.Easy, label: '簡単' },
 ]
 
 export default function Review({ go }: { go: (s: Screen) => void }) {
@@ -34,11 +34,11 @@ export default function Review({ go }: { go: (s: Screen) => void }) {
   if (!card || !word)
     return (
       <>
-        <div className="flex flex-1 flex-col items-center justify-center gap-2">
-          <p className="text-2xl font-bold">세션 완료</p>
-          <p className="text-slate-400">{done}회 평가</p>
+        <div className="flex flex-1 flex-col items-center justify-center gap-6">
+          <Stamp />
+          <p className="text-muted">{done}장 복습</p>
         </div>
-        <button onClick={() => go('home')} className="h-16 rounded-2xl bg-sky-500 text-lg font-bold text-white">
+        <button onClick={() => go('home')} className="h-14 rounded-xs border border-ink font-medium active:bg-ink/5">
           홈으로
         </button>
       </>
@@ -56,55 +56,62 @@ export default function Review({ go }: { go: (s: Screen) => void }) {
 
   return (
     <>
-      <div className="flex items-center justify-between text-sm text-slate-400">
-        <button onClick={() => go('home')} className="-m-3 p-3">✕</button>
-        <span>{card.type === 'reading' ? '읽기' : '문맥'} · 남은 {queue.length}</span>
+      <div className="fixed inset-x-0 top-0 h-px">
+        <div className="h-full bg-ink transition-[width] duration-300" style={{ width: `${(done / (done + queue.length)) * 100}%` }} />
+      </div>
+      <div className="flex items-center justify-between text-sm text-muted">
+        <button onClick={() => go('home')} className="-m-3 p-3" aria-label="닫기">✕</button>
+        <span>{card.type === 'reading' ? '읽기' : '문맥'}</span>
       </div>
 
-      <button
-        onClick={flip}
-        className="flex flex-1 flex-col items-center justify-center gap-6 text-center"
-        lang="ja"
-      >
+      <button onClick={flip} className="flex flex-1 flex-col items-center overflow-y-auto pt-[16dvh] text-center" lang="ja">
         {card.type === 'reading' ? <ReadingFace word={word} flipped={flipped} /> : <ContextFace word={word} flipped={flipped} />}
-        {!flipped && <span className="text-sm text-slate-500" lang="ko">탭해서 정답 보기</span>}
       </button>
 
-      <div className="mb-2 flex h-9 justify-end">
+      <div className="flex h-10 items-center justify-end">
         {flipped && (
           <button
             onClick={() => toggleFlag(word.id)}
             aria-pressed={!!flagged}
-            className={`rounded-full px-4 text-sm ${flagged ? 'bg-amber-500/20 text-amber-300' : 'bg-slate-800 text-slate-400'}`}
+            className={`text-sm underline-offset-4 ${flagged ? 'text-ink underline' : 'text-muted'}`}
           >
-            {flagged ? '⚑ 이상함 표시됨' : '⚐ 이상함'}
+            {flagged ? '이상함 표시됨' : '이상함 표시'}
           </button>
         )}
       </div>
-      <div className="grid h-20 grid-cols-4 gap-2">
-        {flipped ? (
-          GRADES.map((g) => (
-            <button key={g.grade} onClick={() => answer(g.grade)} className={`rounded-2xl font-bold text-white ${g.cls}`}>
-              {g.label}
+      {flipped ? (
+        <div className="grid h-16 grid-cols-4 divide-x divide-ink rounded-xs border border-ink">
+          {GRADES.map((g) => (
+            <button
+              key={g.grade}
+              onClick={() => answer(g.grade)}
+              className="flex flex-col items-center justify-center gap-0.5 active:bg-ink/5"
+            >
+              <span lang="ja" className={`font-ja text-[15px] font-medium ${g.accent ? 'text-accent' : ''}`}>{g.label}</span>
+              <span className="text-[11px] text-muted">
+                {formatInterval(+preview[g.grade].card.due - +preview[g.grade].log.review)}
+              </span>
             </button>
-          ))
-        ) : (
-          <button onClick={flip} className="col-span-4 rounded-2xl bg-slate-700 text-lg font-bold active:bg-slate-600">
-            정답 보기
-          </button>
-        )}
-      </div>
-      <div className="mt-1 grid h-5 grid-cols-4 gap-2 text-center text-xs text-slate-400 tabular-nums">
-        {preview && GRADES.map((g) => <span key={g.grade}>{formatInterval(+preview[g.grade].card.due - +preview[g.grade].log.review)}</span>)}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <button onClick={flip} className="h-16 rounded-xs border border-ink font-medium active:bg-ink/5">
+          정답 보기
+        </button>
+      )}
     </>
   )
 }
 
+// 단어는 명조 64px 이상. 화면 폭을 넘는 긴 단어만 폭에 맞춰 줄임
+const wordSize = (w: string) => `${Math.min(80, Math.max(40, Math.floor(320 / [...w].length)))}px`
+
 function ReadingFace({ word, flipped }: { word: Word; flipped: boolean }) {
   return (
     <>
-      <p className="text-6xl font-bold">{word.word}</p>
+      <p className="font-mincho leading-none font-medium" style={{ fontSize: wordSize(word.word) }}>
+        {word.word}
+      </p>
       {flipped && <Answer word={word} />}
     </>
   )
@@ -115,12 +122,16 @@ function ContextFace({ word, flipped }: { word: Word; flipped: boolean }) {
   const [before, ...rest] = word.example_ja.split(target)
   return (
     <>
-      <p className="text-2xl leading-relaxed">
+      <p className="font-ja text-[22px] leading-[1.9]">
         {before}
-        <span className={flipped ? 'font-bold text-emerald-400' : 'text-slate-500'}>{flipped ? target : '＿＿＿'}</span>
+        {flipped ? (
+          <span className="font-mincho font-bold underline decoration-1 underline-offset-[6px]">{target}</span>
+        ) : (
+          <span className="inline-block min-w-[3em] border-b border-ink align-baseline">&nbsp;</span>
+        )}
         {rest.join(target)}
       </p>
-      {!flipped && <p className="text-slate-400" lang="ko">{word.example_ko}</p>}
+      {!flipped && <p className="mt-4 text-[15px] text-muted" lang="ko">{word.example_ko}</p>}
       {flipped && <Answer word={word} hideExample />}
     </>
   )
@@ -128,15 +139,29 @@ function ContextFace({ word, flipped }: { word: Word; flipped: boolean }) {
 
 function Answer({ word, hideExample }: { word: Word; hideExample?: boolean }) {
   return (
-    <div className="flex flex-col gap-3">
-      <p className="text-3xl text-emerald-400">{word.reading}</p>
-      <p className="text-xl" lang="ko">{word.meaning_ko}</p>
+    <div className="reveal flex w-full flex-col items-center">
+      <hr className="my-7 w-12 border-rule" />
+      <p className="font-mincho text-[28px] font-medium">{word.reading}</p>
+      <p className="mt-2 text-lg" lang="ko">{word.meaning_ko}</p>
       {!hideExample && (
         <>
-          <p className="mt-4 text-lg">{word.example_ja}</p>
-          <p className="text-slate-400" lang="ko">{word.example_ko}</p>
+          <p className="mt-7 font-ja text-[17px] leading-relaxed">{word.example_ja}</p>
+          <p className="mt-1 text-sm text-muted" lang="ko">{word.example_ko}</p>
         </>
       )}
     </div>
+  )
+}
+
+// 세션 완료 도장
+function Stamp() {
+  return (
+    <svg viewBox="0 0 120 120" className="stamp size-36 text-accent" role="img" aria-label="済">
+      <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" strokeWidth="5" />
+      <circle cx="60" cy="60" r="46" fill="none" stroke="currentColor" strokeWidth="1.5" />
+      <text x="60" y="79" textAnchor="middle" fill="currentColor" fontFamily="'Shippori Mincho', serif" fontWeight="700" fontSize="54">
+        済
+      </text>
+    </svg>
   )
 }

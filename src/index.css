@@ -1,9 +1,135 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/noto-sans-jp';
 
-@theme {
-  --font-sans: 'Noto Sans JP Variable', system-ui, sans-serif;
+/* 서브셋: scripts/subset_fonts.py 로 생성 */
+@font-face {
+  font-family: 'Shippori Mincho';
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/shippori-mincho-500.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Shippori Mincho';
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/shippori-mincho-700.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/pretendard-variable.woff2') format('woff2');
 }
 
-html, body, #root { height: 100%; }
-body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
+/* 和紙 + 墨 + 朱 */
+:root {
+  --paper: #f5f1e8;
+  --ink: #1e1c18;
+  --muted: #8a847a;
+  --rule: #e2dbcc;
+  --accent: #c4412b;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #17160f;
+    --ink: #ece6d8;
+    --muted: #8f887c;
+    --rule: #2c2a22;
+    --accent: #e0604a;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
+  --font-sans: 'Pretendard', 'Noto Sans JP Variable', system-ui, sans-serif;
+  --font-ja: 'Noto Sans JP Variable', 'Pretendard', sans-serif;
+  --font-mincho: 'Shippori Mincho', 'Noto Serif JP', serif;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+}
+
+html,
+body {
+  height: 100%;
+  background: var(--paper);
+  color: var(--ink);
+}
+#root {
+  height: 100dvh;
+}
+body {
+  overscroll-behavior: none;
+  -webkit-tap-highlight-color: transparent;
+  font-variant-numeric: tabular-nums;
+}
+input,
+button {
+  font: inherit;
+  color: inherit;
+}
+input[type='checkbox'] {
+  accent-color: var(--ink);
+}
+
+/* 종이 결: 고정 레이어 한 장, 스크롤 영역엔 안 씀 */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark) {
+  body::after {
+    opacity: 0.04;
+    mix-blend-mode: screen;
+  }
+}
+
+/* 정답 공개 */
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+.reveal {
+  animation: reveal 150ms ease-out both;
+}
+
+/* 済 도장 */
+@keyframes stamp {
+  0% {
+    opacity: 0;
+    transform: rotate(-8deg) scale(1.6);
+  }
+  70% {
+    opacity: 1;
+    transform: rotate(-8deg) scale(0.96);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-8deg) scale(1);
+  }
+}
+.stamp {
+  animation: stamp 260ms cubic-bezier(0.2, 0.8, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
